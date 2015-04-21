@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 19, 2015 at 03:15 PM
+-- Generation Time: Apr 20, 2015 at 04:35 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -85,7 +85,9 @@ CREATE TABLE IF NOT EXISTS `tenants` (
   `Course` varchar(20) NOT NULL COMMENT 'if student',
   `Job` varchar(20) NOT NULL COMMENT 'if employee',
   `Picture` varchar(20) NOT NULL COMMENT '1 by 1',
-  PRIMARY KEY (`TenantID`)
+  `UnitID` int(11) NOT NULL,
+  PRIMARY KEY (`TenantID`),
+  KEY `UnitID` (`UnitID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -144,15 +146,21 @@ CREATE TABLE IF NOT EXISTS `user_type` (
 -- Constraints for table `categories`
 --
 ALTER TABLE `categories`
-  ADD CONSTRAINT `unit_catFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `house_catFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `house_catFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `unit_catFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pictures`
 --
 ALTER TABLE `pictures`
-  ADD CONSTRAINT `unit_pictureFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `house_pictureFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `house_pictureFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `unit_pictureFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `tenants`
+--
+ALTER TABLE `tenants`
+  ADD CONSTRAINT `unit_idFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `units`
