@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 20, 2015 at 04:35 AM
+-- Generation Time: Apr 30, 2015 at 04:45 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -23,17 +23,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ads`
+--
+
+CREATE TABLE IF NOT EXISTS `ads` (
+  `AdsID` int(11) NOT NULL,
+  `UserID` int(11) NOT NULL,
+  `Image` varchar(250) NOT NULL,
+  `Description` varchar(250) NOT NULL,
+  `TimeStamp` timestamp NOT NULL,
+  `Period` int(11) NOT NULL,
+  `Priority` int(11) NOT NULL,
+  PRIMARY KEY (`AdsID`),
+  KEY `UserID` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `categories`
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
   `CategoryID` int(11) NOT NULL AUTO_INCREMENT,
-  `CategoryName` varchar(50) NOT NULL,
-  `HouseID` int(11) NOT NULL,
+  `CategoryName` varchar(100) NOT NULL,
+  PRIMARY KEY (`CategoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `comments`
+--
+
+CREATE TABLE IF NOT EXISTS `comments` (
+  `CommentID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Comment` varchar(160) NOT NULL,
   `UnitID` int(11) NOT NULL,
-  PRIMARY KEY (`CategoryID`),
-  KEY `HouseID` (`HouseID`,`UnitID`),
-  KEY `UnitID` (`UnitID`)
+  `TImestamp` date NOT NULL,
+  PRIMARY KEY (`CommentID`),
+  KEY `UserID` (`UserID`,`UnitID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -51,7 +81,48 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `ContactNo` int(15) NOT NULL,
   `Long` decimal(10,10) NOT NULL,
   `Lat` decimal(10,10) NOT NULL,
-  PRIMARY KEY (`HouseID`)
+  `ManagerID` int(11) NOT NULL,
+  PRIMARY KEY (`HouseID`),
+  KEY `ManagerID` (`ManagerID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `house_category`
+--
+
+CREATE TABLE IF NOT EXISTS `house_category` (
+  `HouseCategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `HouseID` int(11) NOT NULL,
+  `CategoryID` int(11) NOT NULL,
+  PRIMARY KEY (`HouseCategoryID`),
+  KEY `HouseID` (`HouseID`,`CategoryID`),
+  KEY `HouseID_2` (`HouseID`,`CategoryID`),
+  KEY `CategoryID` (`CategoryID`),
+  KEY `CategoryID_2` (`CategoryID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE IF NOT EXISTS `payments` (
+  `PaymentID` int(11) NOT NULL AUTO_INCREMENT,
+  `DateCreated` date NOT NULL,
+  `DateUpdated` date NOT NULL,
+  `UnitID` int(11) NOT NULL,
+  `Amount` int(11) NOT NULL,
+  `Description` varchar(50) NOT NULL,
+  `ModeOfPayment` varchar(50) NOT NULL,
+  `Month` int(2) NOT NULL,
+  `Year` int(4) NOT NULL,
+  `DatePaid` date NOT NULL,
+  `Remarks` varchar(160) NOT NULL,
+  PRIMARY KEY (`PaymentID`),
+  KEY `UnitID` (`UnitID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -65,8 +136,26 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   `PictureName` varchar(30) NOT NULL,
   `HouseID` int(11) NOT NULL,
   `UnitID` int(11) NOT NULL,
+  `PictureType` varchar(100) NOT NULL,
   PRIMARY KEY (`PictureID`),
   KEY `HouseID` (`HouseID`,`UnitID`),
+  KEY `UnitID` (`UnitID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ratings`
+--
+
+CREATE TABLE IF NOT EXISTS `ratings` (
+  `RatingID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int(11) NOT NULL,
+  `Rating` int(11) NOT NULL,
+  `Timestamp` date NOT NULL,
+  `UnitID` int(11) NOT NULL,
+  PRIMARY KEY (`RatingID`),
+  KEY `UserID` (`UserID`,`UnitID`),
   KEY `UnitID` (`UnitID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
@@ -100,11 +189,26 @@ CREATE TABLE IF NOT EXISTS `units` (
   `UnitID` int(11) NOT NULL AUTO_INCREMENT,
   `UnitName` varchar(30) NOT NULL,
   `UnitDescription` varchar(200) NOT NULL,
-  `NumberOfTenants` int(11) NOT NULL,
+  `MaxNumberOfTenants` int(11) NOT NULL,
   `HouseID` int(11) NOT NULL,
   PRIMARY KEY (`UnitID`),
   KEY `HouseID` (`HouseID`),
   KEY `HouseID_2` (`HouseID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unit_category`
+--
+
+CREATE TABLE IF NOT EXISTS `unit_category` (
+  `UnitCategoryID` int(11) NOT NULL AUTO_INCREMENT,
+  `UnitID` int(11) NOT NULL,
+  `CategoryID` int(11) NOT NULL,
+  PRIMARY KEY (`UnitCategoryID`),
+  KEY `UnitID` (`UnitID`,`CategoryID`),
+  KEY `CategoryID` (`CategoryID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -143,11 +247,29 @@ CREATE TABLE IF NOT EXISTS `user_type` (
 --
 
 --
--- Constraints for table `categories`
+-- Constraints for table `ads`
 --
-ALTER TABLE `categories`
-  ADD CONSTRAINT `house_catFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `unit_catFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `ads`
+  ADD CONSTRAINT `ads_usersFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `houses`
+--
+ALTER TABLE `houses`
+  ADD CONSTRAINT `users_housesFK` FOREIGN KEY (`ManagerID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `house_category`
+--
+ALTER TABLE `house_category`
+  ADD CONSTRAINT `categories_housecategoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `house_housecategoryFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `payments`
+--
+ALTER TABLE `payments`
+  ADD CONSTRAINT `unit_paymentFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pictures`
@@ -155,6 +277,13 @@ ALTER TABLE `categories`
 ALTER TABLE `pictures`
   ADD CONSTRAINT `house_pictureFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `unit_pictureFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `ratings`
+--
+ALTER TABLE `ratings`
+  ADD CONSTRAINT `units_ratingsFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `users_ratingFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tenants`
@@ -167,6 +296,13 @@ ALTER TABLE `tenants`
 --
 ALTER TABLE `units`
   ADD CONSTRAINT `house_unitFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `unit_category`
+--
+ALTER TABLE `unit_category`
+  ADD CONSTRAINT `categories_unitcategoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `units_unitcategoryFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`

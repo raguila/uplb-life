@@ -15,6 +15,12 @@ use Yii;
  * @property integer $ContactNo
  * @property string $Long
  * @property string $Lat
+ * @property integer $ManagerID
+ *
+ * @property HouseCategory[] $houseCategories
+ * @property Users $manager
+ * @property Pictures[] $pictures
+ * @property Units[] $units
  */
 class Houses extends \yii\db\ActiveRecord
 {
@@ -32,8 +38,8 @@ class Houses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['HouseName', 'HouseDescription', 'Address', 'Caretaker', 'ContactNo', 'Long', 'Lat'], 'required'],
-            [['ContactNo'], 'integer'],
+            [['HouseName', 'HouseDescription', 'Address', 'Caretaker', 'ContactNo', 'Long', 'Lat', 'ManagerID'], 'required'],
+            [['ContactNo', 'ManagerID'], 'integer'],
             [['Long', 'Lat'], 'number'],
             [['HouseName', 'Caretaker'], 'string', 'max' => 30],
             [['HouseDescription', 'Address'], 'string', 'max' => 200]
@@ -54,6 +60,39 @@ class Houses extends \yii\db\ActiveRecord
             'ContactNo' => 'Contact No',
             'Long' => 'Long',
             'Lat' => 'Lat',
+            'ManagerID' => 'Manager ID',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHouseCategories()
+    {
+        return $this->hasMany(HouseCategory::className(), ['HouseID' => 'HouseID']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getManager()
+    {
+        return $this->hasOne(Users::className(), ['UserID' => 'ManagerID']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPictures()
+    {
+        return $this->hasMany(Pictures::className(), ['HouseID' => 'HouseID']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUnits()
+    {
+        return $this->hasMany(Units::className(), ['HouseID' => 'HouseID']);
     }
 }

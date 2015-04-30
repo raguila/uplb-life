@@ -4,19 +4,19 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Houses */
+/* @var $model app\models\HouseCategory */
 
-$this->title = $model->HouseID;
-$this->params['breadcrumbs'][] = ['label' => 'Houses', 'url' => ['index']];
+$this->title = $model->HouseCategoryID;
+$this->params['breadcrumbs'][] = ['label' => 'House Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="houses-view">
+<div class="house-category-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->HouseID], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->HouseID], [
+        <?= Html::a('Update', ['update', 'id' => $model->HouseCategoryID], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Delete', ['delete', 'id' => $model->HouseCategoryID], [
             'class' => 'btn btn-danger',
             'data' => [
                 'confirm' => 'Are you sure you want to delete this item?',
@@ -28,15 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
+            'HouseCategoryID',
             'HouseID',
-            'HouseName',
-            'HouseDescription',
-            'Address',
-            'Caretaker',
-            'ContactNo',
-            'Long',
-            'Lat',
-            'ManagerID',
+            'CategoryID',
         ],
     ]) ?>
 

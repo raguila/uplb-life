@@ -4,20 +4,26 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\CategoriesSearch */
+/* @var $model app\models\CommentsSearch */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="categories-search">
+<div class="comments-search">
 
     <?php $form = ActiveForm::begin([
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'CategoryID') ?>
+    <?= $form->field($model, 'CommentID') ?>
 
-    <?= $form->field($model, 'CategoryName') ?>
+    <?= $form->field($model, 'UserID') ?>
+
+    <?= $form->field($model, 'Comment') ?>
+
+    <?= $form->field($model, 'UnitID') ?>
+
+    <?= $form->field($model, 'TImestamp') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

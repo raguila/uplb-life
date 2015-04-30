@@ -5,12 +5,12 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Houses;
+use app\models\Ratings;
 
 /**
- * HousesSearch represents the model behind the search form about `app\models\Houses`.
+ * RatingsSearch represents the model behind the search form about `app\models\Ratings`.
  */
-class HousesSearch extends Houses
+class RatingsSearch extends Ratings
 {
     /**
      * @inheritdoc
@@ -18,9 +18,8 @@ class HousesSearch extends Houses
     public function rules()
     {
         return [
-            [['HouseID', 'ContactNo', 'ManagerID'], 'integer'],
-            [['HouseName', 'HouseDescription', 'Address', 'Caretaker'], 'safe'],
-            [['Long', 'Lat'], 'number'],
+            [['RatingID', 'UserID', 'Rating', 'UnitID'], 'integer'],
+            [['Timestamp'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ class HousesSearch extends Houses
      */
     public function search($params)
     {
-        $query = Houses::find();
+        $query = Ratings::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -53,17 +52,12 @@ class HousesSearch extends Houses
         }
 
         $query->andFilterWhere([
-            'HouseID' => $this->HouseID,
-            'ContactNo' => $this->ContactNo,
-            'Long' => $this->Long,
-            'Lat' => $this->Lat,
-            'ManagerID' => $this->ManagerID,
+            'RatingID' => $this->RatingID,
+            'UserID' => $this->UserID,
+            'Rating' => $this->Rating,
+            'Timestamp' => $this->Timestamp,
+            'UnitID' => $this->UnitID,
         ]);
-
-        $query->andFilterWhere(['like', 'HouseName', $this->HouseName])
-            ->andFilterWhere(['like', 'HouseDescription', $this->HouseDescription])
-            ->andFilterWhere(['like', 'Address', $this->Address])
-            ->andFilterWhere(['like', 'Caretaker', $this->Caretaker]);
 
         return $dataProvider;
     }

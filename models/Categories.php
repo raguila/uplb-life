@@ -9,11 +9,9 @@ use Yii;
  *
  * @property integer $CategoryID
  * @property string $CategoryName
- * @property integer $HouseID
- * @property integer $UnitID
  *
- * @property Houses $house
- * @property Units $unit
+ * @property HouseCategory[] $houseCategories
+ * @property UnitCategory[] $unitCategories
  */
 class Categories extends \yii\db\ActiveRecord
 {
@@ -31,9 +29,8 @@ class Categories extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['CategoryName', 'HouseID', 'UnitID'], 'required'],
-            [['HouseID', 'UnitID'], 'integer'],
-            [['CategoryName'], 'string', 'max' => 50]
+            [['CategoryName'], 'required'],
+            [['CategoryName'], 'string', 'max' => 100]
         ];
     }
 
@@ -45,24 +42,22 @@ class Categories extends \yii\db\ActiveRecord
         return [
             'CategoryID' => 'Category ID',
             'CategoryName' => 'Category Name',
-            'HouseID' => 'House ID',
-            'UnitID' => 'Unit ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getHouse()
+    public function getHouseCategories()
     {
-        return $this->hasOne(Houses::className(), ['HouseID' => 'HouseID']);
+        return $this->hasMany(HouseCategory::className(), ['CategoryID' => 'CategoryID']);
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getUnit()
+    public function getUnitCategories()
     {
-        return $this->hasOne(Units::className(), ['UnitID' => 'UnitID']);
+        return $this->hasMany(UnitCategory::className(), ['CategoryID' => 'CategoryID']);
     }
 }

@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'ContactNo',
             // 'Long',
             // 'Lat',
+            // 'ManagerID',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

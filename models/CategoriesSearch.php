@@ -18,7 +18,7 @@ class CategoriesSearch extends Categories
     public function rules()
     {
         return [
-            [['CategoryID', 'HouseID', 'UnitID'], 'integer'],
+            [['CategoryID'], 'integer'],
             [['CategoryName'], 'safe'],
         ];
     }
@@ -53,8 +53,6 @@ class CategoriesSearch extends Categories
 
         $query->andFilterWhere([
             'CategoryID' => $this->CategoryID,
-            'HouseID' => $this->HouseID,
-            'UnitID' => $this->UnitID,
         ]);
 
         $query->andFilterWhere(['like', 'CategoryName', $this->CategoryName]);
