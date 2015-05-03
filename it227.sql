@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 30, 2015 at 04:45 AM
+-- Generation Time: May 03, 2015 at 11:25 AM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -175,6 +175,7 @@ CREATE TABLE IF NOT EXISTS `tenants` (
   `Job` varchar(20) NOT NULL COMMENT 'if employee',
   `Picture` varchar(20) NOT NULL COMMENT '1 by 1',
   `UnitID` int(11) NOT NULL,
+  `IDNumber` varchar(15) NOT NULL,
   PRIMARY KEY (`TenantID`),
   KEY `UnitID` (`UnitID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
@@ -209,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `unit_category` (
   PRIMARY KEY (`UnitCategoryID`),
   KEY `UnitID` (`UnitID`,`CategoryID`),
   KEY `CategoryID` (`CategoryID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 

@@ -19,7 +19,7 @@ class TenantsSearch extends Tenants
     {
         return [
             [['TenantID', 'Age', 'UnitID'], 'integer'],
-            [['TenantName', 'Gender', 'Birthdate', 'Course', 'Job', 'Picture'], 'safe'],
+            [['TenantName', 'Gender', 'Birthdate', 'Course', 'Job', 'Picture', 'IDNumber'], 'safe'],
         ];
     }
 
@@ -62,7 +62,8 @@ class TenantsSearch extends Tenants
             ->andFilterWhere(['like', 'Gender', $this->Gender])
             ->andFilterWhere(['like', 'Course', $this->Course])
             ->andFilterWhere(['like', 'Job', $this->Job])
-            ->andFilterWhere(['like', 'Picture', $this->Picture]);
+            ->andFilterWhere(['like', 'Picture', $this->Picture])
+            ->andFilterWhere(['like', 'IDNumber', $this->IDNumber]);
 
         return $dataProvider;
     }
