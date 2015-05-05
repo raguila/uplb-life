@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: May 03, 2015 at 11:25 AM
+-- Generation Time: May 05, 2015 at 02:44 PM
 -- Server version: 5.6.17
 -- PHP Version: 5.5.12
 
@@ -167,10 +167,9 @@ CREATE TABLE IF NOT EXISTS `ratings` (
 
 CREATE TABLE IF NOT EXISTS `tenants` (
   `TenantID` int(11) NOT NULL AUTO_INCREMENT,
-  `TenantName` varchar(30) NOT NULL,
+  `TenantName` varchar(50) NOT NULL,
   `Gender` varchar(10) NOT NULL,
   `Birthdate` date NOT NULL,
-  `Age` int(3) NOT NULL,
   `Course` varchar(20) NOT NULL COMMENT 'if student',
   `Job` varchar(20) NOT NULL COMMENT 'if employee',
   `Picture` varchar(20) NOT NULL COMMENT '1 by 1',

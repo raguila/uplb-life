@@ -11,7 +11,6 @@ use Yii;
  * @property string $TenantName
  * @property string $Gender
  * @property string $Birthdate
- * @property integer $Age
  * @property string $Course
  * @property string $Job
  * @property string $Picture
@@ -36,10 +35,10 @@ class Tenants extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['TenantName', 'Gender', 'Birthdate', 'Age', 'Course', 'Job', 'Picture', 'UnitID', 'IDNumber'], 'required'],
+            [['TenantName', 'Gender', 'Birthdate', 'UnitID'], 'required'],
             [['Birthdate'], 'safe'],
-            [['Age', 'UnitID'], 'integer'],
-            [['TenantName'], 'string', 'max' => 30],
+            [['UnitID'], 'integer'],
+            [['TenantName'], 'string', 'max' => 50],
             [['Gender'], 'string', 'max' => 10],
             [['Course', 'Job', 'Picture'], 'string', 'max' => 20],
             [['IDNumber'], 'string', 'max' => 15]
@@ -56,12 +55,11 @@ class Tenants extends \yii\db\ActiveRecord
             'TenantName' => 'Tenant Name',
             'Gender' => 'Gender',
             'Birthdate' => 'Birthdate',
-            'Age' => 'Age',
             'Course' => 'Course',
             'Job' => 'Job',
             'Picture' => 'Picture',
             'UnitID' => 'Unit ID',
-            'IDNumber' => 'Idnumber',
+            'IDNumber' => 'ID Number',
         ];
     }
 

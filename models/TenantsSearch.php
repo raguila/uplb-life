@@ -18,7 +18,7 @@ class TenantsSearch extends Tenants
     public function rules()
     {
         return [
-            [['TenantID', 'Age', 'UnitID'], 'integer'],
+            [['TenantID', 'UnitID'], 'integer'],
             [['TenantName', 'Gender', 'Birthdate', 'Course', 'Job', 'Picture', 'IDNumber'], 'safe'],
         ];
     }
@@ -54,7 +54,6 @@ class TenantsSearch extends Tenants
         $query->andFilterWhere([
             'TenantID' => $this->TenantID,
             'Birthdate' => $this->Birthdate,
-            'Age' => $this->Age,
             'UnitID' => $this->UnitID,
         ]);
 

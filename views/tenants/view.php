@@ -32,7 +32,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'TenantName',
             'Gender',
             'Birthdate',
-            'Age',
             'Course',
             'Job',
             'Picture',
