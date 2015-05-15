@@ -11,8 +11,13 @@ body {
     background: #eeeeee;
     color: #222222;
     font-family: "Source-Sans", SourceSansPro-Regular, sans-serif;
+<<<<<<< HEAD
     padding-top: 5px;
     padding-bottom: 5px;
+=======
+    padding-top: 20px;
+    padding-bottom: 20px;
+>>>>>>> f1576c1a7766f100d84c6cd40917cd3d142a88b3
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -133,4 +138,8 @@ textarea {
 
 .custom_navbar,ul,li {
     margin-left: 40px;
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> f1576c1a7766f100d84c6cd40917cd3d142a88b3
