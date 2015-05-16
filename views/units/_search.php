@@ -21,9 +21,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'UnitDescription') ?>
 
-    <?= $form->field($model, 'NumberOfTenants') ?>
+    <?= $form->field($model, 'MaxNumberOfTenants') ?>
 
     <?= $form->field($model, 'HouseID') ?>
+
+    <?php // echo $form->field($model, 'MonthlyRatePerPerson') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
