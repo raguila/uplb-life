@@ -18,7 +18,7 @@ class UnitsSearch extends Units
     public function rules()
     {
         return [
-            [['UnitID', 'NumberOfTenants', 'HouseID'], 'integer'],
+            [['UnitID', 'MaxNumberOfTenants', 'HouseID', 'MonthlyRatePerPerson'], 'integer'],
             [['UnitName', 'UnitDescription'], 'safe'],
         ];
     }
@@ -47,14 +47,19 @@ class UnitsSearch extends Units
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'UnitID' => $this->UnitID,
-            'NumberOfTenants' => $this->NumberOfTenants,
+            'MaxNumberOfTenants' => $this->MaxNumberOfTenants,
             'HouseID' => $this->HouseID,
+            'MonthlyRatePerPerson' => $this->MonthlyRatePerPerson,
         ]);
 
         $query->andFilterWhere(['like', 'UnitName', $this->UnitName])

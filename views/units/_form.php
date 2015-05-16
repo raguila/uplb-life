@@ -16,9 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'UnitDescription')->textInput(['maxlength' => 200]) ?>
 
-    <?= $form->field($model, 'NumberOfTenants')->textInput() ?>
+    <?= $form->field($model, 'MaxNumberOfTenants')->textInput() ?>
 
     <?= $form->field($model, 'HouseID')->textInput() ?>
+
+    <?= $form->field($model, 'MonthlyRatePerPerson')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

@@ -31,8 +31,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'UnitID',
             'UnitName',
             'UnitDescription',
-            'NumberOfTenants',
+            'MaxNumberOfTenants',
             'HouseID',
+            'MonthlyRatePerPerson',
         ],
     ]) ?>
 
