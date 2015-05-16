@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 16, 2015 at 01:28 AM
+-- Generation Time: May 17, 2015 at 06:44 AM
 -- Server version: 5.5.43-0ubuntu0.14.10.1
 -- PHP Version: 5.5.12-2ubuntu4.4
 
@@ -73,11 +73,23 @@ CREATE TABLE IF NOT EXISTS `houses` (
   `HouseDescription` varchar(200) NOT NULL,
   `Address` varchar(200) NOT NULL,
   `Caretaker` varchar(30) NOT NULL,
-  `ContactNo` int(15) NOT NULL,
+  `ContactNo` int(11) DEFAULT NULL,
+  `Price` decimal(10,2) NOT NULL,
+  `Size` decimal(10,2) NOT NULL,
+  `Distance` decimal(10,2) NOT NULL,
   `Long` decimal(10,10) NOT NULL,
   `Lat` decimal(10,10) NOT NULL,
+  `Featured` tinyint(1) NOT NULL,
   `ManagerID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
+
+--
+-- Dumping data for table `houses`
+--
+
+INSERT INTO `houses` (`HouseID`, `HouseName`, `HouseDescription`, `Address`, `Caretaker`, `ContactNo`, `Price`, `Size`, `Distance`, `Long`, `Lat`, `Featured`, `ManagerID`) VALUES
+(1, 'Feature Dormitory', 'Dormitory Description', 'Silangan Rd. UPLB', 'Mang Nono', 2147483647, 7058.00, 15.00, 2.00, 0.0000000000, 0.0000000000, 0, 1),
+(2, 'New Dormitory', 'Dorm Description', 'Kanluran Rd. UplB', 'Mang Toto', 2147483647, 10000.00, 20.00, 0.00, 0.0000000000, 0.0000000000, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -123,7 +135,15 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   `HouseID` int(11) NOT NULL,
   `UnitID` int(11) NOT NULL,
   `PictureType` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+--
+-- Dumping data for table `pictures`
+--
+
+INSERT INTO `pictures` (`PictureID`, `PictureName`, `HouseID`, `UnitID`, `PictureType`) VALUES
+(2, 'dorm.jpg', 1, 1, ''),
+(3, 'dorm2.jpg', 1, 1, '');
 
 -- --------------------------------------------------------
 
@@ -169,7 +189,14 @@ CREATE TABLE IF NOT EXISTS `units` (
   `UnitDescription` varchar(200) NOT NULL,
   `MaxNumberOfTenants` int(11) NOT NULL,
   `HouseID` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `units`
+--
+
+INSERT INTO `units` (`UnitID`, `UnitName`, `UnitDescription`, `MaxNumberOfTenants`, `HouseID`) VALUES
+(1, 'Unit 1', 'Unit Description', 4, 1);
 
 -- --------------------------------------------------------
 
@@ -326,7 +353,7 @@ MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `houses`
 --
 ALTER TABLE `houses`
-MODIFY `HouseID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `HouseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT for table `house_category`
 --
@@ -341,7 +368,7 @@ MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `pictures`
 --
 ALTER TABLE `pictures`
-MODIFY `PictureID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `PictureID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `ratings`
 --
@@ -356,7 +383,7 @@ MODIFY `TenantID` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `units`
 --
 ALTER TABLE `units`
-MODIFY `UnitID` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `UnitID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `unit_category`
 --

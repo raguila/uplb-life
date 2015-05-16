@@ -27,9 +27,17 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'ContactNo') ?>
 
+    <?php // echo $form->field($model, 'Price') ?>
+
+    <?php // echo $form->field($model, 'Size') ?>
+
+    <?php // echo $form->field($model, 'Distance') ?>
+
     <?php // echo $form->field($model, 'Long') ?>
 
     <?php // echo $form->field($model, 'Lat') ?>
+
+    <?php // echo $form->field($model, 'Featured') ?>
 
     <?php // echo $form->field($model, 'ManagerID') ?>
 

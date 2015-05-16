@@ -18,9 +18,9 @@ class HousesSearch extends Houses
     public function rules()
     {
         return [
-            [['HouseID', 'ContactNo', 'ManagerID'], 'integer'],
+            [['HouseID', 'ContactNo', 'Featured', 'ManagerID'], 'integer'],
             [['HouseName', 'HouseDescription', 'Address', 'Caretaker'], 'safe'],
-            [['Long', 'Lat'], 'number'],
+            [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
         ];
     }
 
@@ -48,15 +48,23 @@ class HousesSearch extends Houses
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'HouseID' => $this->HouseID,
             'ContactNo' => $this->ContactNo,
+            // 'Price' => $this->Price,
+            // 'Size' => $this->Size,
+            // 'Distance' => $this->Distance,
             'Long' => $this->Long,
             'Lat' => $this->Lat,
+            'Featured' => $this->Featured,
             'ManagerID' => $this->ManagerID,
         ]);
 
@@ -64,6 +72,16 @@ class HousesSearch extends Houses
             ->andFilterWhere(['like', 'HouseDescription', $this->HouseDescription])
             ->andFilterWhere(['like', 'Address', $this->Address])
             ->andFilterWhere(['like', 'Caretaker', $this->Caretaker]);
+
+        //Filter price range by 500 given the input price
+        $query->andFilterWhere(['<=', 'Price', $this->Price + 500]);
+        $query->andWhere(['>=', 'Price', $this->Price - 500]);
+
+        $query->andFilterWhere(['<=', 'Size', $this->Size + 2]);
+        $query->andWhere(['>=', 'Size', $this->Size - 2]);
+
+        $query->andFilterWhere(['<=', 'Distance', $this->Distance + 1]);
+        $query->andWhere(['>=', 'Distance', $this->Distance - 1]);
 
         return $dataProvider;
     }

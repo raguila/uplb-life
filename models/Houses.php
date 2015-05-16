@@ -13,8 +13,12 @@ use Yii;
  * @property string $Address
  * @property string $Caretaker
  * @property integer $ContactNo
+ * @property string $Price
+ * @property string $Size
+ * @property string $Distance
  * @property string $Long
  * @property string $Lat
+ * @property integer $Featured
  * @property integer $ManagerID
  *
  * @property HouseCategory[] $houseCategories
@@ -38,9 +42,9 @@ class Houses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['HouseName', 'HouseDescription', 'Address', 'Caretaker', 'ContactNo', 'Long', 'Lat', 'ManagerID'], 'required'],
-            [['ContactNo', 'ManagerID'], 'integer'],
-            [['Long', 'Lat'], 'number'],
+            [['HouseName', 'HouseDescription', 'Address', 'Caretaker', 'Price', 'Size', 'Distance', 'Long', 'Lat', 'Featured', 'ManagerID'], 'required'],
+            [['ContactNo', 'Featured', 'ManagerID'], 'integer'],
+            [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
             [['HouseName', 'Caretaker'], 'string', 'max' => 30],
             [['HouseDescription', 'Address'], 'string', 'max' => 200]
         ];
@@ -58,8 +62,12 @@ class Houses extends \yii\db\ActiveRecord
             'Address' => 'Address',
             'Caretaker' => 'Caretaker',
             'ContactNo' => 'Contact No',
+            'Price' => 'Price',
+            'Size' => 'Size',
+            'Distance' => 'Distance',
             'Long' => 'Long',
             'Lat' => 'Lat',
+            'Featured' => 'Featured',
             'ManagerID' => 'Manager ID',
         ];
     }

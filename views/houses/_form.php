@@ -22,9 +22,17 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ContactNo')->textInput() ?>
 
+    <?= $form->field($model, 'Price')->textInput(['maxlength' => 10]) ?>
+
+    <?= $form->field($model, 'Size')->textInput(['maxlength' => 10]) ?>
+
+    <?= $form->field($model, 'Distance')->textInput(['maxlength' => 10]) ?>
+
     <?= $form->field($model, 'Long')->textInput(['maxlength' => 10]) ?>
 
     <?= $form->field($model, 'Lat')->textInput(['maxlength' => 10]) ?>
+
+    <?= $form->field($model, 'Featured')->textInput() ?>
 
     <?= $form->field($model, 'ManagerID')->textInput() ?>
 

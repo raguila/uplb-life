@@ -1,7 +1,11 @@
 <?php
 /* @var $this yii\web\View */
-$this->title = 'My Yii Application';
+$this->title = 'UPLB Life';
 use yii\helpers\Html;
+use yii\grid\GridView;
+use yii\widgets\ActiveForm;
+ use yii\web\View;
+//use yii\base\View;
 ?>
 <div class="site-index">
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -59,7 +63,7 @@ use yii\helpers\Html;
       </a>
     </div>
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
+    <div class="left-side">
 	
 	  
 	  <div class="container col-md-3" style="text-align: center;">
@@ -68,16 +72,16 @@ use yii\helpers\Html;
 			<h4>Location</h4>
 			<div class="checkbox" style="text-align:left;">
 			<label>
-			<input type="checkbox"  value="1" checked="">
+			<input type="checkbox"  name="inside_uplb" id="outside_uplb" value="1" checked="">
 			Inside UPLB
 			<br>
-			&nbsp <input type="checkbox"  value="0">
+			&nbsp <input type="checkbox"  name="lower_campus" id="lower_campus" value="0">
 			Lower Campus
 			<br>
-			&nbsp <input type="checkbox"  value="0">
+			&nbsp <input type="checkbox"  name="upper_campus" id="upper_campus" value="0">
 			Upper Campus
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox" name="uplb" name="outside_uplb" id="outside_uplb" value="0">
 			Outside UPLB
 			</label>
 			</div>
@@ -159,101 +163,115 @@ use yii\helpers\Html;
 			</label>
 			</div>
 
+			<a class='btn btn-primary' href='index.php?r=houses/index'>Search by Categories&raquo;</a>
+
 
 			
 	  </div>
+
+
 	  <div class="container col-md-6">
-			<input type="text" class="form-control" placeholder="Search...">
+			<!-- <input type="text" class="form-control" placeholder="Search..."> -->
+			<br />
+			<?php $form = ActiveForm::begin([
+		        'action' => ['site/searchresult'],
+		        'method' => 'get',
+		    ]); ?>
+		    
+		    <?= $form->field($model, 'HouseName',['template' => "{input}",])->textInput(['maxlength' => 255, 'placeholder' => 'Search..' ]) ?>
 			<br>
-			<h3>Search Result:</h3>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				<?= Html::a( 'Apartment 1', '../site/individual'); ?>
-				<br>
-				<a href="individual.html"><img src="images/dorm.jpg" height="150px" width="150px"></a>
+			<?php ActiveForm::end(); ?>
+
+			<div class="container-main col-md-12 " style="text-align: center;">
+				<h4><?= Html::a( 'Featured Dormitory', 'index.php?r=houses/view&id=1'); ?></h4>
+				<a href="index.php?r=houses/view&id=1"><img src="images/dorm.jpg" height="200px" width="450px"></a>
 				 
 			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 2
-				<br>
-				<a href="individual.html"><img src="images/dorm2.jpg" height="150px" width="150px"></a>
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 3
-				<br>
-				<a href="individual.html"><img src="images/dorm3.jpg" height="150px" width="150px"></a>
+
+			<div class="container-main col-md-12 " style="text-align: center;">
+				<h4><?= Html::a( 'Featured Apartment', 'index.php?r=houses/view&id=1'); ?></h4>
+				<a href="index.php?r=houses/view&id=1"><img src="images/dorm4.jpg" height="200px" width="450px"></a>
+				 
 			</div>
 
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 4
-				<br>
-				<a href="individual.html"><img src="images/dorm4.jpg" height="150px" width="150px"></a>
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 5
-				<br>
-				<a href="individual.html"><img src="images/dorm5.jpg" height="150px" width="150px"></a>
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 6
-				<br>
-				<img src="images/dorm.jpg" height="150px" width="150px">
-			</div>
+			<div class="container-main col-md-12 " style="text-align: center;">
+				<h4><?= Html::a( 'New Houses', 'index.php?r=houses/view&id=1'); ?></h4>
+				
+				<div class="container-main col-md-6 " style="text-align: center;">
+					<a href="index.php?r=houses/view&id=2"><img src="images/dorm2.jpg" height="200px" width="200px"></a>
+				</div>
 
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 7
-				<br>
-				<img src="images/dorm6.jpg" height="150px" width="150px">
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 8
-				<br>
-				<img src="images/dorm7.jpg" height="150px" width="150px">
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 9
-				<br>
-				<img src="images/dorm2.jpg" height="150px" width="150px">
-			</div>
+				<div class="container-main col-md-6 " style="text-align: center;">
+					<a href="index.php?r=houses/view&id=2"><img src="images/dorm3.jpg" height="200px" width="200"></a>
+				</div>
 
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 10
-				<br>
-				<img src="images/dorm3.jpg" height="150px" width="150px">
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 11
-				<br>
-				<img src="images/dorm.jpg" height="150px" width="150px">
-			</div>
-			<div class="container-main col-sm-6 col-md-4" style="text-align: center;">
-				Apartment 12
-				<br>
-				<img src="images/dorm2.jpg" height="150px" width="150px">
 			</div>
 
 
 	  </div>
 	  <div class="container col-md-3" style="text-align: center;">
+	  <?php $form = ActiveForm::begin([
+	        'action' => ['site/searchresult'],
+	        'method' => 'get',
+	    ]); ?>
+				<h2>Filters</h2>
+				<br>
+				
+				<div id="slider">
+					<label>Price</label> 
+					<br />
+					<label>500 - 2000 Php</label> 
+					<?= $form->field($model, 'Price',['template' => "{input}"])->input('range',['id' => 'price', 'value' => '500', 'min' => '500', 'max' => '20000' , 'oninput' => 'outputUpdatePrice(value)', 'class' => 'range-input']); ?>
+					<!-- <input type="range" name="price" id="price" value="500" min="500" max="20000" oninput="outputUpdatePrice(value)"> -->
+					<output id="amount_price"><label>500 Php</label></output>
+				</div>
+				<br>
+				
+				<div id="slider2">
+					<label>Size</label>
+					<br />
+					<label>10 - 30 sq. meters</label>
+					<?= $form->field($model, 'Size',['template' => "{input}"])->input('range',['id' => 'size', 'value' => '20', 'min' => '10', 'max' => '30' , 'oninput' => 'outputUpdateSize(value)', 'class' => 'range-input']); ?> 
+					<!-- <input type="range" name="size" id="size" value="20" min="10" max="30" oninput="outputUpdateSize(value)"> -->
+					<output id="amount_size"><label>20 sq. meters</label></output>
+				</div>
+				<br>
+				
+				<div id="slider3">
+					<label>Distance from UPLB</label>
+					<br />
+					<label>0 - 10 km</label>
+					<?= $form->field($model, 'Distance',['template' => "{input}"])->input('range',['id' => 'distance', 'value' => '0', 'min' => '0', 'max' => '10' , 'oninput' => 'outputUpdateDistance(value)', 'class' => 'range-input']); ?>  
+					<!-- <input type="range" name="distance" id="distance" value="0" min="0" max="10" oninput="outputUpdateDistance(value)"> -->
+					<output id="amount_distance"><label>0 km</label></output>
+				</div>
+				<br>
 
-			<h2>Filters</h2>
-			<br>
-			Price
-			<div id="slider"></div>
-			<br>
-			Size
-			<div id="slider2"></div>
-			<br>
-			Distance from UPLB
-			<div id="slider3"></div>
-			<br>
+				<!-- <a class='btn btn-primary' href='index.php?r=houses/index'>Search by Filters&raquo;</a> -->
+				<?= Html::submitButton('Search by Filters&raquo;', ['class' => 'btn btn-primary']) ?>
 
-			<img src="images/ads.jpg">
-			<br>
-			<br>
-			<img src="images/ads.jpg">
-			<br>
-			<br>
+				<?php ActiveForm::end(); ?>
+				<br>
+				<br>
+				<img src="images/ads.jpg">
+				<br>
+				<br>
+				<img src="images/ads.jpg">
+				<br>
+				<br>
 
+			
+				<?=
+					$this->registerJs("function outputUpdatePrice(vol) {
+						document.querySelector('#amount_price').value = vol+' Php';
+						}
+						function outputUpdateSize(vol) {
+						document.querySelector('#amount_size').value = vol+' sq. meters';
+						}
+						function outputUpdateDistance(vol) {
+						document.querySelector('#amount_distance').value = vol+' km';
+						}", View::POS_END, 'site-index');
+				?>
 	  </div>
     </div>
 </div>

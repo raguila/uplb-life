@@ -31,8 +31,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'Address',
             'Caretaker',
             // 'ContactNo',
+            // 'Price',
+            // 'Size',
+            // 'Distance',
             // 'Long',
             // 'Lat',
+            // 'Featured',
             // 'ManagerID',
 
             ['class' => 'yii\grid\ActionColumn'],
