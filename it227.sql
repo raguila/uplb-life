@@ -2,12 +2,10 @@
 -- version 4.1.14
 -- http://www.phpmyadmin.net
 --
-
--- Host: localhost
--- Generation Time: May 17, 2015 at 06:44 AM
--- Server version: 5.5.43-0ubuntu0.14.10.1
--- PHP Version: 5.5.12-2ubuntu4.4
-
+-- Host: 127.0.0.1
+-- Generation Time: May 17, 2015 at 04:57 AM
+-- Server version: 5.6.17
+-- PHP Version: 5.5.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -97,10 +95,7 @@ CREATE TABLE IF NOT EXISTS `houses` (
 --
 
 INSERT INTO `houses` (`HouseID`, `HouseName`, `HouseDescription`, `Address`, `Caretaker`, `ContactNo`, `Price`, `Size`, `Distance`, `Long`, `Lat`, `Featured`, `ManagerID`) VALUES
-(1, 'Feature Dormitory', 'Dormitory Description', 'Silangan Rd. UPLB', 'Mang Nono', 2147483647, 7058.00, 15.00, 2.00, 0.0000000000, 0.0000000000, 0, 1),
-(2, 'New Dormitory', 'Dorm Description', 'Kanluran Rd. UplB', 'Mang Toto', 2147483647, 10000.00, 20.00, 0.00, 0.0000000000, 0.0000000000, 0, 1),
-(3, 'West Brook', '', '', '', 0, '0.0000000000', '0.0000000000', 2);
-
+(1, 'West Brook', '', '', '', NULL, '3000.00', '0.00', '0.00', '0.0000000000', '0.0000000000', 0, 2);
 
 -- --------------------------------------------------------
 
@@ -129,6 +124,7 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `PaymentID` int(11) NOT NULL AUTO_INCREMENT,
   `DateCreated` date NOT NULL,
   `DateUpdated` date NOT NULL,
+  `HouseID` int(11) NOT NULL,
   `UnitID` int(11) NOT NULL,
   `Amount` int(11) NOT NULL,
   `Description` varchar(50) NOT NULL,
@@ -138,8 +134,16 @@ CREATE TABLE IF NOT EXISTS `payments` (
   `DatePaid` date NOT NULL,
   `Remarks` varchar(160) NOT NULL,
   PRIMARY KEY (`PaymentID`),
-  KEY `UnitID` (`UnitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+  KEY `UnitID` (`UnitID`),
+  KEY `HouseID` (`HouseID`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`PaymentID`, `DateCreated`, `DateUpdated`, `HouseID`, `UnitID`, `Amount`, `Description`, `ModeOfPayment`, `Month`, `Year`, `DatePaid`, `Remarks`) VALUES
+(1, '2015-05-17', '2015-05-17', 1, 1, 3000, '', 'Thrown in the face :v', 5, 2015, '2015-05-17', '');
 
 -- --------------------------------------------------------
 
@@ -156,8 +160,11 @@ CREATE TABLE IF NOT EXISTS `pictures` (
   PRIMARY KEY (`PictureID`),
   KEY `HouseID` (`HouseID`,`UnitID`),
   KEY `UnitID` (`UnitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
+--
+-- Dumping data for table `pictures`
+--
 
 INSERT INTO `pictures` (`PictureID`, `PictureName`, `HouseID`, `UnitID`, `PictureType`) VALUES
 (2, 'dorm.jpg', 1, 1, ''),
@@ -198,7 +205,14 @@ CREATE TABLE IF NOT EXISTS `tenants` (
   `IDNumber` varchar(15) NOT NULL,
   PRIMARY KEY (`TenantID`),
   KEY `UnitID` (`UnitID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `tenants`
+--
+
+INSERT INTO `tenants` (`TenantID`, `TenantName`, `Gender`, `Birthdate`, `Course`, `Job`, `Picture`, `UnitID`, `IDNumber`) VALUES
+(1, 'Monina Carandang', 'F', '1992-05-20', 'MIT', 'Student', '', 1, '2008-37434');
 
 -- --------------------------------------------------------
 
@@ -221,7 +235,6 @@ CREATE TABLE IF NOT EXISTS `units` (
 --
 -- Dumping data for table `units`
 --
-
 
 INSERT INTO `units` (`UnitID`, `UnitName`, `UnitDescription`, `MaxNumberOfTenants`, `HouseID`, `MonthlyRatePerPerson`) VALUES
 (1, 'West Brook Room 1', '2 Person room', 2, 1, 3000);
@@ -289,204 +302,74 @@ INSERT INTO `user_type` (`UserTypeID`, `UserTypeDescription`) VALUES
 (2, 'User'),
 (3, 'HouseManager');
 
-
--- Indexes for table `comments`
 --
-ALTER TABLE `comments`
- ADD PRIMARY KEY (`CommentID`), ADD KEY `UserID` (`UserID`,`UnitID`);
-
---
--- Indexes for table `houses`
---
-ALTER TABLE `houses`
- ADD PRIMARY KEY (`HouseID`), ADD KEY `ManagerID` (`ManagerID`);
-
---
--- Indexes for table `house_category`
---
-ALTER TABLE `house_category`
- ADD PRIMARY KEY (`HouseCategoryID`), ADD KEY `HouseID` (`HouseID`,`CategoryID`), ADD KEY `HouseID_2` (`HouseID`,`CategoryID`), ADD KEY `CategoryID` (`CategoryID`), ADD KEY `CategoryID_2` (`CategoryID`);
-
---
--- Indexes for table `payments`
---
-ALTER TABLE `payments`
- ADD PRIMARY KEY (`PaymentID`), ADD KEY `UnitID` (`UnitID`);
-
---
--- Indexes for table `pictures`
---
-ALTER TABLE `pictures`
- ADD PRIMARY KEY (`PictureID`), ADD KEY `HouseID` (`HouseID`,`UnitID`), ADD KEY `UnitID` (`UnitID`);
-
---
--- Indexes for table `ratings`
---
-ALTER TABLE `ratings`
- ADD PRIMARY KEY (`RatingID`), ADD KEY `UserID` (`UserID`,`UnitID`), ADD KEY `UnitID` (`UnitID`);
-
---
--- Indexes for table `tenants`
---
-ALTER TABLE `tenants`
- ADD PRIMARY KEY (`TenantID`), ADD KEY `UnitID` (`UnitID`);
-
---
--- Indexes for table `units`
---
-ALTER TABLE `units`
- ADD PRIMARY KEY (`UnitID`), ADD KEY `HouseID` (`HouseID`), ADD KEY `HouseID_2` (`HouseID`);
-
---
--- Indexes for table `unit_category`
---
-ALTER TABLE `unit_category`
- ADD PRIMARY KEY (`UnitCategoryID`), ADD KEY `UnitID` (`UnitID`,`CategoryID`), ADD KEY `CategoryID` (`CategoryID`);
-
---
--- Indexes for table `users`
---
-ALTER TABLE `users`
- ADD PRIMARY KEY (`UserID`), ADD KEY `UserTypeID` (`UserTypeID`);
-
---
--- Indexes for table `user_type`
---
-ALTER TABLE `user_type`
- ADD PRIMARY KEY (`UserTypeID`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `categories`
---
-ALTER TABLE `categories`
-MODIFY `CategoryID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `comments`
---
-ALTER TABLE `comments`
-MODIFY `CommentID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `houses`
---
-ALTER TABLE `houses`
-MODIFY `HouseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
--- AUTO_INCREMENT for table `house_category`
---
-ALTER TABLE `house_category`
-MODIFY `HouseCategoryID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `payments`
---
-ALTER TABLE `payments`
-MODIFY `PaymentID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `pictures`
---
-ALTER TABLE `pictures`
-MODIFY `PictureID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `ratings`
---
-ALTER TABLE `ratings`
-MODIFY `RatingID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `tenants`
---
-ALTER TABLE `tenants`
-MODIFY `TenantID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `units`
---
-ALTER TABLE `units`
-MODIFY `UnitID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `unit_category`
---
-ALTER TABLE `unit_category`
-MODIFY `UnitCategoryID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-MODIFY `UserID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
---
--- AUTO_INCREMENT for table `user_type`
---
-ALTER TABLE `user_type`
-MODIFY `UserTypeID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
---
-
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `ads`
+-- Constraints for table `comments`
 --
-ALTER TABLE `ads`
-  ADD CONSTRAINT `ads_usersFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `comments`
+  ADD CONSTRAINT `comment_userFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `houses`
 --
 ALTER TABLE `houses`
-  ADD CONSTRAINT `users_housesFK` FOREIGN KEY (`ManagerID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_houseFK` FOREIGN KEY (`ManagerID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `house_category`
 --
 ALTER TABLE `house_category`
-  ADD CONSTRAINT `categories_housecategoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `category_housecategoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `house_housecategoryFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `payments`
 --
 ALTER TABLE `payments`
-  ADD CONSTRAINT `unit_paymentFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `payment_unitFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `payment_house_FK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `pictures`
 --
 ALTER TABLE `pictures`
-  ADD CONSTRAINT `house_pictureFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `unit_pictureFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `picture_houseFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `picture_unitFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `ratings`
 --
 ALTER TABLE `ratings`
-  ADD CONSTRAINT `units_ratingsFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `users_ratingFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rating_unitFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `rating_userFK` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `tenants`
 --
 ALTER TABLE `tenants`
-  ADD CONSTRAINT `unit_idFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `tenant_unitFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `units`
 --
 ALTER TABLE `units`
-  ADD CONSTRAINT `house_unitFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `unit_houseFK` FOREIGN KEY (`HouseID`) REFERENCES `houses` (`HouseID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `unit_category`
 --
 ALTER TABLE `unit_category`
-  ADD CONSTRAINT `categories_unitcategoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `units_unitcategoryFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `unitcategory_categoryFK` FOREIGN KEY (`CategoryID`) REFERENCES `categories` (`CategoryID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `unitcategory_unitFK` FOREIGN KEY (`UnitID`) REFERENCES `units` (`UnitID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `usertype_usersFK` FOREIGN KEY (`UserTypeID`) REFERENCES `user_type` (`UserTypeID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `user_usertypeFK` FOREIGN KEY (`UserTypeID`) REFERENCES `user_type` (`UserTypeID`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

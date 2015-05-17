@@ -18,7 +18,7 @@ class PaymentsSearch extends Payments
     public function rules()
     {
         return [
-            [['PaymentID', 'UnitID', 'Amount', 'Month', 'Year'], 'integer'],
+            [['PaymentID', 'UnitID', 'HouseID', 'Amount', 'Month', 'Year'], 'integer'],
             [['DateCreated', 'DateUpdated', 'Description', 'ModeOfPayment', 'DatePaid', 'Remarks'], 'safe'],
         ];
     }
@@ -60,6 +60,7 @@ class PaymentsSearch extends Payments
             'DateCreated' => $this->DateCreated,
             'DateUpdated' => $this->DateUpdated,
             'UnitID' => $this->UnitID,
+            'HouseID' => $this->HouseID,
             'Amount' => $this->Amount,
             'Month' => $this->Month,
             'Year' => $this->Year,

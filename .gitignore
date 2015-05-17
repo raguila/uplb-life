@@ -1,3 +1,6 @@
+#composer lock
+composer.lock
+
 #DB config file
 /config/db.php
 

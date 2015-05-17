@@ -18,6 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'UnitID')->textInput() ?>
 
+    <?= $form->field($model, 'HouseID')->textInput() ?>
+
     <?= $form->field($model, 'Amount')->textInput() ?>
 
     <?= $form->field($model, 'Description')->textInput(['maxlength' => 50]) ?>

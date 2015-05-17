@@ -11,6 +11,7 @@ use Yii;
  * @property string $DateCreated
  * @property string $DateUpdated
  * @property integer $UnitID
+ * @property integer $HouseID
  * @property integer $Amount
  * @property string $Description
  * @property string $ModeOfPayment
@@ -19,6 +20,7 @@ use Yii;
  * @property string $DatePaid
  * @property string $Remarks
  *
+ * @property Houses $house
  * @property Units $unit
  */
 class Payments extends \yii\db\ActiveRecord
@@ -37,9 +39,9 @@ class Payments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['DateCreated', 'DateUpdated', 'UnitID', 'Amount', 'Description', 'ModeOfPayment', 'Month', 'Year', 'DatePaid', 'Remarks'], 'required'],
+            [['DateCreated', 'DateUpdated', 'UnitID', 'HouseID', 'Amount', 'Description', 'ModeOfPayment', 'Month', 'Year', 'DatePaid', 'Remarks'], 'required'],
             [['DateCreated', 'DateUpdated', 'DatePaid'], 'safe'],
-            [['UnitID', 'Amount', 'Month', 'Year'], 'integer'],
+            [['UnitID', 'HouseID', 'Amount', 'Month', 'Year'], 'integer'],
             [['Description', 'ModeOfPayment'], 'string', 'max' => 50],
             [['Remarks'], 'string', 'max' => 160]
         ];
@@ -55,6 +57,7 @@ class Payments extends \yii\db\ActiveRecord
             'DateCreated' => 'Date Created',
             'DateUpdated' => 'Date Updated',
             'UnitID' => 'Unit ID',
+            'HouseID' => 'House ID',
             'Amount' => 'Amount',
             'Description' => 'Description',
             'ModeOfPayment' => 'Mode Of Payment',
@@ -63,6 +66,14 @@ class Payments extends \yii\db\ActiveRecord
             'DatePaid' => 'Date Paid',
             'Remarks' => 'Remarks',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHouse()
+    {
+        return $this->hasOne(Houses::className(), ['HouseID' => 'HouseID']);
     }
 
     /**

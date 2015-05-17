@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'DateCreated',
             'DateUpdated',
             'UnitID',
+            'HouseID',
             'Amount',
             'Description',
             'ModeOfPayment',

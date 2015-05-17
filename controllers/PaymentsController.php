@@ -8,6 +8,7 @@ use app\models\PaymentsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\models\Houses;
 
 /**
  * PaymentsController implements the CRUD actions for Payments model.
@@ -33,6 +34,26 @@ class PaymentsController extends Controller
     public function actionIndex()
     {
         $searchModel = new PaymentsSearch();
+
+        $userTypeID = Yii::$app->user->identity->UserTypeID;
+
+        if ($userTypeID == 1) {
+            //Admin. Can see everything
+        } else if ($userTypeID == 2) {
+            //Normal User. Shouldn't see anything
+            // return $this->redirect(['']);
+        } else if ($userTypeID == 3) {
+            //House Manager. Can see only own stuff
+            $managerUserID = Yii::$app->user->identity->UserID;
+            $houseID = Houses::find()
+            ->where(['ManagerID' => $managerUserID])
+            ->one()->HouseID;
+
+            $searchModel->HouseID = $houseID;  
+        }
+
+        
+
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
