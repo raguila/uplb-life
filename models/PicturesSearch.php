@@ -18,8 +18,8 @@ class PicturesSearch extends Pictures
     public function rules()
     {
         return [
-            [['PictureID', 'HouseID', 'UnitID'], 'integer'],
-            [['PictureName', 'PictureType'], 'safe'],
+            [['PictureID', 'HouseID'], 'integer'],
+            [['PictureName', 'PictureDescription', 'PictureType'], 'safe'],
         ];
     }
 
@@ -47,17 +47,21 @@ class PicturesSearch extends Pictures
             'query' => $query,
         ]);
 
-        if (!($this->load($params) && $this->validate())) {
+        $this->load($params);
+
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to any records when validation fails
+            // $query->where('0=1');
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'PictureID' => $this->PictureID,
             'HouseID' => $this->HouseID,
-            'UnitID' => $this->UnitID,
         ]);
 
         $query->andFilterWhere(['like', 'PictureName', $this->PictureName])
+            ->andFilterWhere(['like', 'PictureDescription', $this->PictureDescription])
             ->andFilterWhere(['like', 'PictureType', $this->PictureType]);
 
         return $dataProvider;

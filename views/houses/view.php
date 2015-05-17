@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use app\assets\AppAsset;
+ use yii\web\View;
 
 
 use dosamigos\google\maps\LatLng;
@@ -20,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 $bundle = AppAsset::register($this);
 
-$coord = new LatLng(['lat' => 14.165554, 'lng' => 121.244551]);
+$coord = new LatLng(['lat' => $model->Lat, 'lng' => $model->Long]);
 $map = new Map([
     'center' => $coord,
     'zoom' => 16,
@@ -46,15 +47,15 @@ $map->addOverlay($marker);
 
 <div class="row">
     <?php foreach ($model->pictures as $p): ?>
-        <div class="container col-md-4">
+        <div class="container col-md-4" style="text-align: center;">
         <?php $pid = $p->PictureID ?>
         
-        <p><?= $p->PictureName ?></p>
+        
         
         <a href="#<?= $pid ?>">
             <img src="<?=$bundle->baseUrl.'/images/'.$p->PictureName?>" height="200px" width="350px" id="<?= $p->PictureName ?>"/>
         </a>
-
+        <p><?= $p->PictureDescription ?></p>
         </div>
     <?php endforeach; ?>
 
@@ -62,8 +63,8 @@ $map->addOverlay($marker);
     <?php foreach ($model->pictures as $p): ?>
         <?php $pid = $p->PictureID ?>
         <div class="overlay" id="<?= $pid ?>">
-            <a href="#close" title="Close future box">
-                <img src="<?=$bundle->baseUrl.'/images/'.$p->PictureName?>" height="400px" width="600px" />
+            <a href="#close" title="Close">
+                <img src="<?=$bundle->baseUrl.'/images/'.$p->PictureName?>" height="450px" width="650px" />
             </a>
         </div>        
     <?php endforeach; ?>
@@ -92,6 +93,10 @@ $map->addOverlay($marker);
             'HouseName',
             'HouseDescription',
             'Address',
+            'Price',
+            'Size',
+            'Distance',
+            'HouseType',
             'Caretaker',
             'ContactNo',
             'Long',
@@ -105,4 +110,7 @@ $map->addOverlay($marker);
     </div>
     </div>    
     
+</div>
+
+
 </div>

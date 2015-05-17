@@ -10,6 +10,8 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\Houses;
 use app\models\HousesSearch;
+use app\models\FilterSearch;
+use app\models\MainSearch;
 
 class SiteController extends Controller
 {
@@ -53,9 +55,13 @@ class SiteController extends Controller
     {
         $searchModel = new HousesSearch();
         $model = new HousesSearch();
+        $filter = new FilterSearch();
+        $main = new MainSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'model' => $model,
+            'filter' => $filter,
+            'main' => $main,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -71,10 +77,13 @@ class SiteController extends Controller
     {
         $searchModel = new HousesSearch();
         $model = new HousesSearch();
+        $houses = new Houses();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('searchresult', [
             'model' => $model,
             'searchModel' => $searchModel,
+            'houses' => $houses,
             'dataProvider' => $dataProvider,
         ]);
     }

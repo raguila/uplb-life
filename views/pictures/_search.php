@@ -19,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'PictureName') ?>
 
-    <?= $form->field($model, 'HouseID') ?>
+    <?= $form->field($model, 'PictureDescription') ?>
 
-    <?= $form->field($model, 'UnitID') ?>
+    <?= $form->field($model, 'HouseID') ?>
 
     <?= $form->field($model, 'PictureType') ?>
 

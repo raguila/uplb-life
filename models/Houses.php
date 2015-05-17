@@ -10,6 +10,7 @@ use Yii;
  * @property integer $HouseID
  * @property string $HouseName
  * @property string $HouseDescription
+ * @property string $HouseType
  * @property string $Address
  * @property string $Caretaker
  * @property integer $ContactNo
@@ -23,6 +24,7 @@ use Yii;
  *
  * @property HouseCategory[] $houseCategories
  * @property Users $manager
+ * @property Payments[] $payments
  * @property Pictures[] $pictures
  * @property Units[] $units
  */
@@ -42,11 +44,12 @@ class Houses extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['HouseName', 'HouseDescription', 'Address', 'Caretaker', 'Price', 'Size', 'Distance', 'Long', 'Lat', 'Featured', 'ManagerID'], 'required'],
-            [['ContactNo', 'Featured', 'ManagerID'], 'integer'],
+            [['HouseName', 'HouseDescription', 'HouseType', 'Address', 'Caretaker', 'Price', 'Size', 'Distance', 'Long', 'Lat', 'Featured', 'ManagerID'], 'required'],
+            [['Featured', 'ManagerID'], 'integer'],
             [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
             [['HouseName', 'Caretaker'], 'string', 'max' => 30],
-            [['HouseDescription', 'Address'], 'string', 'max' => 200]
+            [['HouseDescription', 'Address'], 'string', 'max' => 200],
+            [['HouseType', 'ContactNo'], 'string', 'max' => 15]
         ];
     }
 
@@ -59,6 +62,7 @@ class Houses extends \yii\db\ActiveRecord
             'HouseID' => 'House ID',
             'HouseName' => 'House Name',
             'HouseDescription' => 'House Description',
+            'HouseType' => 'House Type',
             'Address' => 'Address',
             'Caretaker' => 'Caretaker',
             'ContactNo' => 'Contact No',
@@ -86,6 +90,14 @@ class Houses extends \yii\db\ActiveRecord
     public function getManager()
     {
         return $this->hasOne(Users::className(), ['UserID' => 'ManagerID']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPayments()
+    {
+        return $this->hasMany(Payments::className(), ['HouseID' => 'HouseID']);
     }
 
     /**

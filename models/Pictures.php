@@ -9,12 +9,11 @@ use Yii;
  *
  * @property integer $PictureID
  * @property string $PictureName
+ * @property string $PictureDescription
  * @property integer $HouseID
- * @property integer $UnitID
  * @property string $PictureType
  *
  * @property Houses $house
- * @property Units $unit
  */
 class Pictures extends \yii\db\ActiveRecord
 {
@@ -32,9 +31,10 @@ class Pictures extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PictureName', 'HouseID', 'UnitID', 'PictureType'], 'required'],
-            [['HouseID', 'UnitID'], 'integer'],
+            [['PictureName', 'PictureDescription', 'HouseID', 'PictureType'], 'required'],
+            [['HouseID'], 'integer'],
             [['PictureName'], 'string', 'max' => 30],
+            [['PictureDescription'], 'string', 'max' => 50],
             [['PictureType'], 'string', 'max' => 100]
         ];
     }
@@ -47,8 +47,8 @@ class Pictures extends \yii\db\ActiveRecord
         return [
             'PictureID' => 'Picture ID',
             'PictureName' => 'Picture Name',
+            'PictureDescription' => 'Picture Description',
             'HouseID' => 'House ID',
-            'UnitID' => 'Unit ID',
             'PictureType' => 'Picture Type',
         ];
     }
@@ -59,13 +59,5 @@ class Pictures extends \yii\db\ActiveRecord
     public function getHouse()
     {
         return $this->hasOne(Houses::className(), ['HouseID' => 'HouseID']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUnit()
-    {
-        return $this->hasOne(Units::className(), ['UnitID' => 'UnitID']);
     }
 }

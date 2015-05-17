@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'PictureName')->textInput(['maxlength' => 30]) ?>
 
-    <?= $form->field($model, 'HouseID')->textInput() ?>
+    <?= $form->field($model, 'PictureDescription')->textInput(['maxlength' => 50]) ?>
 
-    <?= $form->field($model, 'UnitID')->textInput() ?>
+    <?= $form->field($model, 'HouseID')->textInput() ?>
 
     <?= $form->field($model, 'PictureType')->textInput(['maxlength' => 100]) ?>
 

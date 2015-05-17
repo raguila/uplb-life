@@ -17,10 +17,12 @@ use yii\grid\GridView;
 
             // 'HouseID',
             'HouseName',
-            'HouseDescription',
-            'Address',
+            'ContactNo',
+            //'HouseDescription',
+            //'Address',
             'Price',
             'Size',
+            //'HouseType',
             // 'pictures' => [
             //     'header' => 'Picture',
             //     'value' => ''
@@ -30,6 +32,18 @@ use yii\grid\GridView;
             // 'Long',
             // 'Lat',
             // 'ManagerID',
+            ['class' => 'yii\grid\ActionColumn', 
+                'template' => '{view}',
+                'buttons'=>[
+                      'view' => function ($url, $houses, $key) {
+                        $url = "index.php?r=houses/view&id=".$houses->HouseID;     
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', $url, [
+                                'title' => Yii::t('yii', 'View'),
+                        ]);                                
+    
+                      }
+                  ]       
+            ],
         ],
     ]); ?>
 

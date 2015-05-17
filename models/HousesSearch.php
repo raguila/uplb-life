@@ -19,7 +19,7 @@ class HousesSearch extends Houses
     {
         return [
             [['HouseID', 'ContactNo', 'Featured', 'ManagerID'], 'integer'],
-            [['HouseName', 'HouseDescription', 'Address', 'Caretaker'], 'safe'],
+            [['HouseName', 'HouseDescription', 'HouseType', 'Address', 'Caretaker', 'ContactNo'], 'safe'],
             [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
         ];
     }
@@ -59,9 +59,9 @@ class HousesSearch extends Houses
         $query->andFilterWhere([
             'HouseID' => $this->HouseID,
             'ContactNo' => $this->ContactNo,
-            // 'Price' => $this->Price,
-            // 'Size' => $this->Size,
-            // 'Distance' => $this->Distance,
+            //'Price' => $this->Price,
+            //'Size' => $this->Size,
+            //'Distance' => $this->Distance,
             'Long' => $this->Long,
             'Lat' => $this->Lat,
             'Featured' => $this->Featured,
@@ -70,18 +70,9 @@ class HousesSearch extends Houses
 
         $query->andFilterWhere(['like', 'HouseName', $this->HouseName])
             ->andFilterWhere(['like', 'HouseDescription', $this->HouseDescription])
+            // ->orWhere(['like', 'HouseType', $this->HouseName])
             ->andFilterWhere(['like', 'Address', $this->Address])
             ->andFilterWhere(['like', 'Caretaker', $this->Caretaker]);
-
-        //Filter price range by 500 given the input price
-        $query->andFilterWhere(['<=', 'Price', $this->Price + 500]);
-        $query->andWhere(['>=', 'Price', $this->Price - 500]);
-
-        $query->andFilterWhere(['<=', 'Size', $this->Size + 2]);
-        $query->andWhere(['>=', 'Size', $this->Size - 2]);
-
-        $query->andFilterWhere(['<=', 'Distance', $this->Distance + 1]);
-        $query->andWhere(['>=', 'Distance', $this->Distance - 1]);
 
         return $dataProvider;
     }

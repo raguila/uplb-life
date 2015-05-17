@@ -16,6 +16,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'HouseDescription')->textInput(['maxlength' => 200]) ?>
 
+    <?= $form->field($model, 'HouseType')->textInput(['maxlength' => 15]) ?>
+
     <?= $form->field($model, 'Address')->textInput(['maxlength' => 200]) ?>
 
     <?= $form->field($model, 'Caretaker')->textInput(['maxlength' => 30]) ?>

@@ -4,7 +4,7 @@ $this->title = 'UPLB Life';
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
- use yii\web\View;
+use yii\web\View;
 //use yii\base\View;
 ?>
 <div class="site-index">
@@ -19,35 +19,35 @@ use yii\widgets\ActiveForm;
 
       <!-- Wrapper for slides -->
       <div class="carousel-inner" role="listbox" style="height: 400px">
-        <div class="item active" style="height: 400px">
-          <img src="images/dorm.jpg" alt="Chania">
+        <div class="item active" style="height: 400px;" >
+          <img src="images/banners/westbrook.png" alt="Westbrook">
           <div class="carousel-caption">
-            <h3>Chania</h3>
-            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+            <h1>Westbrook</h1>
+            <h4>Ladies dormitory inside UPLB.</h4>
           </div>
         </div>
 
         <div class="item" style="height: 400px">
-          <img src="images/dorm2.jpg" alt="Chania">
+          <img src="images/banners/vistadelrey.png" alt="Vista del rey">
           <div class="carousel-caption">
-            <h3>Chania</h3>
-            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+            <h1>Vista del Rey Apartments</h1>
+            <h4>Something here apartments outside UPLB.</h4>
           </div>
         </div>
 
         <div class="item" style="height: 400px">
-          <img src="images/dorm3.jpg" alt="Flower">
+          <img src="images/banners/one_si.png" alt="One Silangan">
           <div class="carousel-caption">
-            <h3>Chania</h3>
-            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+            <h1>One Silangan Dormitory</h1>
+            <h4>Something here dormitory inside UPLB.</h4>
           </div>
         </div>
 
         <div class="item" style="height: 400px">
-          <img src="images/dorm4.jpg" alt="Flower">
+          <img src="images/banners/kdocs.jpg" alt="KDOCS Apartments">
           <div class="carousel-caption">
-            <h3>Chania</h3>
-            <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+            <h1>KDOCS Apartments</h1>
+            <h4>Something here apartments outside UPLB.</h4>
           </div>
         </div>
       </div>
@@ -178,7 +178,7 @@ use yii\widgets\ActiveForm;
 		        'method' => 'get',
 		    ]); ?>
 		    
-		    <?= $form->field($model, 'HouseName',['template' => "{input}",])->textInput(['maxlength' => 255, 'placeholder' => 'Search..' ]) ?>
+		    <?= $form->field($main, 'HouseName',['template' => "{input}",])->textInput(['maxlength' => 255, 'placeholder' => 'Search..' ]) ?>
 			<br>
 			<?php ActiveForm::end(); ?>
 
@@ -221,7 +221,7 @@ use yii\widgets\ActiveForm;
 					<label>Price</label> 
 					<br />
 					<label>500 - 2000 Php</label> 
-					<?= $form->field($model, 'Price',['template' => "{input}"])->input('range',['id' => 'price', 'value' => '500', 'min' => '500', 'max' => '20000' , 'oninput' => 'outputUpdatePrice(value)', 'class' => 'range-input']); ?>
+					<?= $form->field($filter, 'Price',['template' => "{input}"])->input('range',['id' => 'price', 'value' => '500', 'min' => '500', 'max' => '20000' , 'oninput' => 'outputUpdatePrice(value)', 'class' => 'range-input']); ?>
 					<!-- <input type="range" name="price" id="price" value="500" min="500" max="20000" oninput="outputUpdatePrice(value)"> -->
 					<output id="amount_price"><label>500 Php</label></output>
 				</div>
@@ -231,7 +231,7 @@ use yii\widgets\ActiveForm;
 					<label>Size</label>
 					<br />
 					<label>10 - 30 sq. meters</label>
-					<?= $form->field($model, 'Size',['template' => "{input}"])->input('range',['id' => 'size', 'value' => '20', 'min' => '10', 'max' => '30' , 'oninput' => 'outputUpdateSize(value)', 'class' => 'range-input']); ?> 
+					<?= $form->field($filter, 'Size',['template' => "{input}"])->input('range',['id' => 'size', 'value' => '20', 'min' => '10', 'max' => '30' , 'oninput' => 'outputUpdateSize(value)', 'class' => 'range-input']); ?> 
 					<!-- <input type="range" name="size" id="size" value="20" min="10" max="30" oninput="outputUpdateSize(value)"> -->
 					<output id="amount_size"><label>20 sq. meters</label></output>
 				</div>
@@ -241,7 +241,7 @@ use yii\widgets\ActiveForm;
 					<label>Distance from UPLB</label>
 					<br />
 					<label>0 - 10 km</label>
-					<?= $form->field($model, 'Distance',['template' => "{input}"])->input('range',['id' => 'distance', 'value' => '0', 'min' => '0', 'max' => '10' , 'oninput' => 'outputUpdateDistance(value)', 'class' => 'range-input']); ?>  
+					<?= $form->field($filter, 'Distance',['template' => "{input}"])->input('range',['id' => 'distance', 'value' => '0', 'min' => '0', 'max' => '10' , 'oninput' => 'outputUpdateDistance(value)', 'class' => 'range-input']); ?>  
 					<!-- <input type="range" name="distance" id="distance" value="0" min="0" max="10" oninput="outputUpdateDistance(value)"> -->
 					<output id="amount_distance"><label>0 km</label></output>
 				</div>
