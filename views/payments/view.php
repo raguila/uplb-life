@@ -29,10 +29,11 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'PaymentID',
+            'TenantID',
             'DateCreated',
             'DateUpdated',
-            'UnitID',
             'HouseID',
+            'UnitID',
             'Amount',
             'Description',
             'ModeOfPayment',

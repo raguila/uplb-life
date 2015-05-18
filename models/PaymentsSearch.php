@@ -6,20 +6,28 @@ use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Payments;
+use app\models\Tenants;
+use app\models\Houses;
+
 
 /**
  * PaymentsSearch represents the model behind the search form about `app\models\Payments`.
  */
 class PaymentsSearch extends Payments
 {
+
+    public $Tenant;
+    public $Unit;
+    
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['PaymentID', 'UnitID', 'HouseID', 'Amount', 'Month', 'Year'], 'integer'],
+            [['PaymentID', 'TenantID', 'HouseID', 'UnitID', 'Amount', 'Month', 'Year'], 'integer'],
             [['DateCreated', 'DateUpdated', 'Description', 'ModeOfPayment', 'DatePaid', 'Remarks'], 'safe'],
+            [['Tenant', 'Unit'], 'safe']
         ];
     }
 
@@ -42,25 +50,37 @@ class PaymentsSearch extends Payments
     public function search($params)
     {
         $query = Payments::find();
+        $query->joinWith(['unit', 'tenant']);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
-        $this->load($params);
+        $dataProvider->sort->attributes['Tenant Name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['Tenants.TenantName' => SORT_ASC],
+            'desc' => ['Tenants.TenantName' => SORT_DESC],
+        ];
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to any records when validation fails
-            // $query->where('0=1');
+        $dataProvider->sort->attributes['Unit Name'] = [
+            // The tables are the ones our relation are configured to
+            // in my case they are prefixed with "tbl_"
+            'asc' => ['Units.UnitName' => SORT_ASC],
+            'desc' => ['Units.UnitName' => SORT_DESC],
+        ];
+
+        if (!($this->load($params) && $this->validate())) {
             return $dataProvider;
         }
 
         $query->andFilterWhere([
             'PaymentID' => $this->PaymentID,
+            self::tablename() . '.TenantID' => $this->TenantID,
             'DateCreated' => $this->DateCreated,
             'DateUpdated' => $this->DateUpdated,
-            'UnitID' => $this->UnitID,
-            'HouseID' => $this->HouseID,
+            self::tablename() .'.HouseID' => $this->HouseID,
+            self::tablename() .'.UnitID' => $this->UnitID,
             'Amount' => $this->Amount,
             'Month' => $this->Month,
             'Year' => $this->Year,

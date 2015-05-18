@@ -8,10 +8,11 @@ use Yii;
  * This is the model class for table "payments".
  *
  * @property integer $PaymentID
+ * @property integer $TenantID
  * @property string $DateCreated
  * @property string $DateUpdated
- * @property integer $UnitID
  * @property integer $HouseID
+ * @property integer $UnitID
  * @property integer $Amount
  * @property string $Description
  * @property string $ModeOfPayment
@@ -39,9 +40,9 @@ class Payments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['DateCreated', 'DateUpdated', 'UnitID', 'HouseID', 'Amount', 'Description', 'ModeOfPayment', 'Month', 'Year', 'DatePaid', 'Remarks'], 'required'],
+            [['TenantID', /*'DateCreated', 'DateUpdated',*/ 'HouseID', 'UnitID', 'Amount', /*'Description', 'ModeOfPayment',*/ 'Month', 'Year', 'DatePaid'/*, 'Remarks'*/], 'required'],
+            [['TenantID', 'HouseID', 'UnitID', 'Amount', 'Month', 'Year'], 'integer'],
             [['DateCreated', 'DateUpdated', 'DatePaid'], 'safe'],
-            [['UnitID', 'HouseID', 'Amount', 'Month', 'Year'], 'integer'],
             [['Description', 'ModeOfPayment'], 'string', 'max' => 50],
             [['Remarks'], 'string', 'max' => 160]
         ];
@@ -54,10 +55,11 @@ class Payments extends \yii\db\ActiveRecord
     {
         return [
             'PaymentID' => 'Payment ID',
+            'TenantID' => 'Tenant ID',
             'DateCreated' => 'Date Created',
             'DateUpdated' => 'Date Updated',
-            'UnitID' => 'Unit ID',
             'HouseID' => 'House ID',
+            'UnitID' => 'Unit ID',
             'Amount' => 'Amount',
             'Description' => 'Description',
             'ModeOfPayment' => 'Mode Of Payment',
@@ -66,6 +68,14 @@ class Payments extends \yii\db\ActiveRecord
             'DatePaid' => 'Date Paid',
             'Remarks' => 'Remarks',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTenant()
+    {
+        return $this->hasOne(Tenants::className(), ['TenantID' => 'TenantID']);
     }
 
     /**

@@ -9,6 +9,10 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\models\Houses;
+use app\models\Units;
+use app\models\Tenants;
+use \yii\db\Query;
+
 
 /**
  * PaymentsController implements the CRUD actions for Payments model.
@@ -44,10 +48,11 @@ class PaymentsController extends Controller
             // return $this->redirect(['']);
         } else if ($userTypeID == 3) {
             //House Manager. Can see only own stuff
-            $managerUserID = Yii::$app->user->identity->UserID;
-            $houseID = Houses::find()
-            ->where(['ManagerID' => $managerUserID])
-            ->one()->HouseID;
+            $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
+
+            $units = Units::findAll(['HouseID' => $houseID]);
+
+            $tenants = $this->getHouseTenants($houseID);
 
             $searchModel->HouseID = $houseID;  
         }
@@ -59,6 +64,9 @@ class PaymentsController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'units' => $units,
+            'tenants' => $tenants,
+            'months' => $this->getMonthsList()
         ]);
     }
 
@@ -83,12 +91,41 @@ class PaymentsController extends Controller
     {
         $model = new Payments();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->PaymentID]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->DateCreated = date("Y-m-d");
+            $model->DateUpdated = date("Y-m-d");
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->PaymentID]);
+            }
         } else {
-            return $this->render('create', [
-                'model' => $model,
-            ]);
+            //Create new Payment Record
+            $userTypeID = Yii::$app->user->identity->UserTypeID;
+
+            if ($userTypeID == 1) {
+                //Admin
+                //Normal User. Redirect
+                // return $this->redirect(['']);
+            } else if ($userTypeID == 3) {
+
+                //House Manager
+                $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
+
+                $units = Units::findAll(['HouseID' => $houseID]);
+
+                $tenants = $this->getHouseTenants($houseID);
+
+                $model->HouseID = $houseID;
+
+                return $this->render('create', [
+                    'model' => $model,
+                    'units' => $units,
+                    'months' => $this->getMonthsList(),
+                    'tenants' => $tenants
+                ]);  
+            }
+
+            
         }
     }
 
@@ -102,12 +139,37 @@ class PaymentsController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->PaymentID]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->DateUpdated = date("Y-m-d");
+
+            if ($model->save()) {
+                return $this->redirect(['view', 'id' => $model->PaymentID]);    
+            }
         } else {
-            return $this->render('update', [
-                'model' => $model,
-            ]);
+            $userTypeID = Yii::$app->user->identity->UserTypeID;
+
+            if ($userTypeID == 1) {
+                //Admin
+                //Normal User. Redirect
+                // return $this->redirect(['']);
+            } else if ($userTypeID == 3) {
+
+                //House Manager
+                $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
+
+                $units = Units::findAll(['HouseID' => $houseID]);
+
+                $tenants = $this->getHouseTenants($houseID);
+
+                $model->HouseID = $houseID;
+
+                return $this->render('update', [
+                    'model' => $model,
+                    'units' => $units,
+                    'months' => $this->getMonthsList(),
+                    'tenants' => $tenants
+                ]);  
+            }
         }
     }
 
@@ -138,5 +200,42 @@ class PaymentsController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+
+
+
+
+
+
+
+    /*HELPER FUNCTIONS*/
+
+    protected function getHouseID($managerUserID) {
+        $houseID = Houses::find()
+            ->where(['ManagerID' => $managerUserID])
+            ->one()->HouseID;
+
+        return $houseID;
+    }
+
+    protected function getMonthsList() {
+        $months = ['1' => 'January', '2' => 'February', '3' => 'March', '4' => 'April',
+            '5' => 'May', '6' => 'June', '7' => 'July', '8' => 'August',
+            '9' => 'September', '10' => 'October', '11' => 'November', '12' => 'December'];
+
+        return $months;
+    }
+
+    protected function getHouseTenants($houseID) {
+         $tenants = (new Query())
+            ->select(['t.TenantName', 't.TenantID'])
+            ->from('Tenants t')
+            ->leftJoin('Units u', 't.UnitID=u.UnitID')
+            ->leftJoin('Houses h', 'h.HouseID=u.HouseID')
+            ->where('h.HouseID=:houseID', [':houseID' => $houseID])
+            ->all();
+
+        return $tenants;
     }
 }

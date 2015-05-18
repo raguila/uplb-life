@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PaymentsSearch */
@@ -15,15 +16,21 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?php //$form->field($model, 'PaymentID') ?>
+    <?= $form->field($model, 'UnitID')->dropDownList(
+        ArrayHelper::map($units, 'UnitID', 'UnitName'),
+        ['prompt' => '-- Select a Unit --']
+    ); ?>
 
-    <?php //$form->field($model, 'DateCreated') ?>
+    <?= $form->field($model, 'TenantID')->dropDownList(
+        ArrayHelper::map($tenants, 'TenantID', 'TenantName'),
+        ['prompt' => '-- Select a Tenant --']
+    ); ?>
 
-    <?php //$form->field($model, 'DateUpdated') ?>
+    <?= $form->field($model, 'Month')->dropDownList($months, ['prompt' => '-- Select Month --']) ?>
 
-    <?php //$form->field($model, 'UnitID') ?>
+    <?= $form->field($model, 'Year')->textInput() ?>
 
-    <?php //$form->field($model, 'HouseID') ?>
+    <?php // echo $form->field($model, 'UnitID') ?>
 
     <?php // echo $form->field($model, 'Amount') ?>
 
@@ -39,7 +46,9 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'Remarks') ?>
 
-    <div class="form-group">
+    <div class="clear-float"></div>
+
+    <div class="submit-reset-buttons">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
         <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
     </div>
