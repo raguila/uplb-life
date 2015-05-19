@@ -39,16 +39,20 @@ class PaymentsController extends Controller
     {
         $searchModel = new PaymentsSearch();
 
+        $isGuest = Yii::$app->user->isGuest;
+
+        if ($isGuest) {
+            return $this->goHome();
+        }
+
         $userTypeID = Yii::$app->user->identity->UserTypeID;
+
 
         if ($userTypeID == 1) {
             //Admin. Can see everything
             $units = Units::find()->all();
             $tenants = Tenants::find()->all();
             $titleSuffix = ' for all Houses';
-        } else if ($userTypeID == 2) {
-            //Normal User. Shouldn't see anything
-            // return $this->redirect(['']);
         } else if ($userTypeID == 3) {
             //House Manager. Can see only own stuff
             $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
@@ -127,6 +131,8 @@ class PaymentsController extends Controller
                 $tenants = $this->getHouseTenants($houseID);
 
                 $model->HouseID = $houseID;
+            } else {
+                return $this->goHome();
             }
 
             return $this->render('create', [
