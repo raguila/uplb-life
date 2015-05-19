@@ -8,6 +8,7 @@ use app\models\PicturesSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * PicturesController implements the CRUD actions for Pictures model.
@@ -62,8 +63,24 @@ class PicturesController extends Controller
     {
         $model = new Pictures();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->PictureID]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->PictureName = UploadedFile::getInstance($model, 'PictureName'); 
+            Yii::info($model->PictureName, __METHOD__);
+
+            if ($model->PictureName && $model->validate()) {                
+                $model->PictureName->saveAs('../web/images/' . $model->PictureName->baseName .'.'. $model->PictureName->extension);
+                $model->PictureName = $model->PictureName->baseName .'.'. $model->PictureName->extension;
+            }else{
+                 Yii::info($model->getErrors());
+                //Yii::app()->end();
+            }
+            
+            if($model->save()) {
+                return $this->redirect(['view', 'id' => $model->PictureID]);    
+            }
+
+            
         } else {
             return $this->render('create', [
                 'model' => $model,

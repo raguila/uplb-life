@@ -4,6 +4,9 @@ namespace app\models;
 
 use Yii;
 
+use app\models\Houses;
+
+
 /**
  * This is the model class for table "pictures".
  *
@@ -31,11 +34,11 @@ class Pictures extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['PictureName', 'PictureDescription', 'HouseID', 'PictureType'], 'required'],
+            [['PictureDescription', 'HouseID'], 'required'],
             [['HouseID'], 'integer'],
-            [['PictureName'], 'string', 'max' => 30],
             [['PictureDescription'], 'string', 'max' => 50],
-            [['PictureType'], 'string', 'max' => 100]
+            [['PictureType'], 'safe']
+            //[['PictureType'], 'string', 'max' => 100]
         ];
     }
 
@@ -50,6 +53,7 @@ class Pictures extends \yii\db\ActiveRecord
             'PictureDescription' => 'Picture Description',
             'HouseID' => 'House ID',
             'PictureType' => 'Picture Type',
+            'HouseName' => 'House Name'
         ];
     }
 
@@ -59,5 +63,11 @@ class Pictures extends \yii\db\ActiveRecord
     public function getHouse()
     {
         return $this->hasOne(Houses::className(), ['HouseID' => 'HouseID']);
+    }
+
+    public function getHouseName() 
+    {
+        Yii::info($this->house, __METHOD__);
+        return $this->house->HouseName;
     }
 }

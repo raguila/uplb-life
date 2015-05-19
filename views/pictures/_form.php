@@ -2,7 +2,8 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use yii\helpers\ArrayHelper;
+use app\models\Houses;
 /* @var $this yii\web\View */
 /* @var $model app\models\Pictures */
 /* @var $form yii\widgets\ActiveForm */
@@ -10,14 +11,22 @@ use yii\widgets\ActiveForm;
 
 <div class="pictures-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'options' => ['class' => 'form-group', 'enctype' => 'multipart/form-data'],
+    ]);  ?>
 
-    <?= $form->field($model, 'PictureName')->textInput(['maxlength' => 30]) ?>
+    <?= $form->field($model, 'PictureName')->fileInput(['id'=>'picture-name']) ?>
 
     <?= $form->field($model, 'PictureDescription')->textInput(['maxlength' => 50]) ?>
 
-    <?= $form->field($model, 'HouseID')->textInput() ?>
-
+    
+    <h5>House</h5>
+    <?= Html::activeDropDownList($model, 'HouseID',
+      ArrayHelper::map(Houses::find()->all(), 'HouseID', 'HouseName')) ?>
+    
+    <br>
+    <br>
+    
     <?= $form->field($model, 'PictureType')->textInput(['maxlength' => 100]) ?>
 
     <div class="form-group">
