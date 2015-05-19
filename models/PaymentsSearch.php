@@ -56,14 +56,14 @@ class PaymentsSearch extends Payments
             'query' => $query,
         ]);
 
-        $dataProvider->sort->attributes['Tenant Name'] = [
+        $dataProvider->sort->attributes['Tenant'] = [
             // The tables are the ones our relation are configured to
             // in my case they are prefixed with "tbl_"
             'asc' => ['Tenants.TenantName' => SORT_ASC],
             'desc' => ['Tenants.TenantName' => SORT_DESC],
         ];
 
-        $dataProvider->sort->attributes['Unit Name'] = [
+        $dataProvider->sort->attributes['Unit'] = [
             // The tables are the ones our relation are configured to
             // in my case they are prefixed with "tbl_"
             'asc' => ['Units.UnitName' => SORT_ASC],

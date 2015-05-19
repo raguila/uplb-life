@@ -55,11 +55,11 @@ class Payments extends \yii\db\ActiveRecord
     {
         return [
             'PaymentID' => 'Payment ID',
-            'TenantID' => 'Tenant ID',
+            'TenantID' => 'Tenant',
             'DateCreated' => 'Date Created',
             'DateUpdated' => 'Date Updated',
             'HouseID' => 'House ID',
-            'UnitID' => 'Unit ID',
+            'UnitID' => 'Unit',
             'Amount' => 'Amount',
             'Description' => 'Description',
             'ModeOfPayment' => 'Mode Of Payment',

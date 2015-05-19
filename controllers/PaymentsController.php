@@ -43,12 +43,18 @@ class PaymentsController extends Controller
 
         if ($userTypeID == 1) {
             //Admin. Can see everything
+            $units = Units::find()->all();
+            $tenants = Tenants::find()->all();
+            $titleSuffix = ' for all Houses';
         } else if ($userTypeID == 2) {
             //Normal User. Shouldn't see anything
             // return $this->redirect(['']);
         } else if ($userTypeID == 3) {
             //House Manager. Can see only own stuff
             $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
+
+            $houseName = $this->getHouseName($houseID);
+            $titleSuffix = ' for ' . $houseName;
 
             $units = Units::findAll(['HouseID' => $houseID]);
 
@@ -57,8 +63,6 @@ class PaymentsController extends Controller
             $searchModel->HouseID = $houseID;  
         }
 
-        
-
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -66,7 +70,8 @@ class PaymentsController extends Controller
             'dataProvider' => $dataProvider,
             'units' => $units,
             'tenants' => $tenants,
-            'months' => $this->getMonthsList()
+            'months' => $this->getMonthsList(),
+            'titleSuffix' => $titleSuffix
         ]);
     }
 
@@ -77,8 +82,14 @@ class PaymentsController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
+        $unitName = Units::findOne($model->UnitID)->UnitName;
+        $tenantName = Tenants::findOne($model->TenantID)->TenantName;
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
+            'unitName' => $unitName,
+            'tenantName' => $tenantName
         ]);
     }
 
@@ -104,8 +115,8 @@ class PaymentsController extends Controller
 
             if ($userTypeID == 1) {
                 //Admin
-                //Normal User. Redirect
-                // return $this->redirect(['']);
+                $units = Units::find()->all();
+                $tenants = Tenants::find()->all();
             } else if ($userTypeID == 3) {
 
                 //House Manager
@@ -116,14 +127,14 @@ class PaymentsController extends Controller
                 $tenants = $this->getHouseTenants($houseID);
 
                 $model->HouseID = $houseID;
-
-                return $this->render('create', [
-                    'model' => $model,
-                    'units' => $units,
-                    'months' => $this->getMonthsList(),
-                    'tenants' => $tenants
-                ]);  
             }
+
+            return $this->render('create', [
+                'model' => $model,
+                'units' => $units,
+                'months' => $this->getMonthsList(),
+                'tenants' => $tenants
+            ]);  
 
             
         }
@@ -150,7 +161,6 @@ class PaymentsController extends Controller
 
             if ($userTypeID == 1) {
                 //Admin
-                //Normal User. Redirect
                 // return $this->redirect(['']);
             } else if ($userTypeID == 3) {
 
@@ -168,7 +178,7 @@ class PaymentsController extends Controller
                     'units' => $units,
                     'months' => $this->getMonthsList(),
                     'tenants' => $tenants
-                ]);  
+                ]);
             }
         }
     }
@@ -217,6 +227,14 @@ class PaymentsController extends Controller
             ->one()->HouseID;
 
         return $houseID;
+    }
+
+    protected function getHouseName($houseID) {
+        $houseName = Houses::find()
+            ->where(['HouseID' => $houseID])
+            ->one()->HouseName;
+
+        return $houseName;
     }
 
     protected function getMonthsList() {

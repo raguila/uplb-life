@@ -14,17 +14,17 @@ use app\models\Units;
 
     <?php $form = ActiveForm::begin(); ?>
 
-     <?= $form->field($model, 'TenantID')->dropDownList(
+    <?= $form->field($model, 'UnitID')->dropDownList(
+        ArrayHelper::map($units, 'UnitID', 'UnitName'),
+        ['prompt' => '-- Select a Unit --']
+    ); ?>
+
+    <?= $form->field($model, 'TenantID')->dropDownList(
         ArrayHelper::map($tenants, 'TenantID', 'TenantName'),
         ['prompt' => '-- Select a Tenant --']
      ); ?>
 
     <?= $form->field($model, 'HouseID', ['template' => "{input}",])->hiddenInput() ?>
-
-    <?= $form->field($model, 'UnitID')->dropDownList(
-        ArrayHelper::map($units, 'UnitID', 'UnitName'),
-        ['prompt' => '-- Select a Unit --']
-    ); ?>
 
     <?= $form->field($model, 'Amount')->textInput() ?>
 

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\PaymentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Payments';
+$this->title = 'Payment records' . $titleSuffix;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="payments-index">
@@ -28,12 +28,14 @@ $this->params['breadcrumbs'][] = $this->title;
         //'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            [ 'attribute' => 'Tenant Name', 'value' => 'tenant.TenantName' ],
-            [ 'attribute' => 'Unit Name', 'value' => 'unit.UnitName' ],
+            [ 'attribute' => 'Unit', 'value' => 'unit.UnitName' ],
+            [ 'attribute' => 'Tenant', 'value' => 'tenant.TenantName' ],            
             'Amount',
             'Month',
             'Year',
+            'DatePaid',
             'Description',
+            //'ModeOfPayment',
             'Remarks',
             //'DateCreated',
             //'DateUpdated',
@@ -45,9 +47,6 @@ $this->params['breadcrumbs'][] = $this->title;
             // 'Year',
             // 'DatePaid',
             // 'Remarks',
-            //[ 'attribute' => 'TenantName', 'value' => 'Tenant.TenantName' ],
-            
-
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>

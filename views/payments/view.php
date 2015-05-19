@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Payments */
 
-$this->title = $model->PaymentID;
+$this->title = $unitName . ', ' . $model->Month . ' - ' . $model->Year;
 $this->params['breadcrumbs'][] = ['label' => 'Payments', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,19 +28,19 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'PaymentID',
-            'TenantID',
-            'DateCreated',
-            'DateUpdated',
-            'HouseID',
-            'UnitID',
+            // 'PaymentID',
+            // 'TenantID',
+            [ 'attribute' => 'Unit', 'value' => $unitName ],
+            [ 'attribute' => 'Tenant', 'value' => $tenantName ],
             'Amount',
-            'Description',
-            'ModeOfPayment',
             'Month',
             'Year',
             'DatePaid',
+            'Description',
+            'ModeOfPayment',
             'Remarks',
+            'DateCreated',
+            'DateUpdated',
         ],
     ]) ?>
 
