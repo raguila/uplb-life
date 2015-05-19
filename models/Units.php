@@ -54,7 +54,7 @@ class Units extends \yii\db\ActiveRecord
             'UnitName' => 'Unit Name',
             'UnitDescription' => 'Unit Description',
             'MaxNumberOfTenants' => 'Max Number Of Tenants',
-            'HouseID' => 'House ID',
+            'HouseID' => 'House',
             'MonthlyRatePerPerson' => 'Monthly Rate Per Person',
         ];
     }

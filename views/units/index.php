@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UnitsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Units';
+$this->title = $houseName . ' Units';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="units-index">
@@ -25,12 +25,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'UnitID',
+            //'UnitID',
             'UnitName',
             'UnitDescription',
             'MaxNumberOfTenants',
-            'HouseID',
-            // 'MonthlyRatePerPerson',
+            //'HouseID',
+            'MonthlyRatePerPerson',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

@@ -52,7 +52,7 @@ class Tenants extends \yii\db\ActiveRecord
     {
         return [
             'TenantID' => 'Tenant ID',
-            'TenantName' => 'Tenant Name',
+            'TenantName' => 'Name',
             'Gender' => 'Gender',
             'Birthdate' => 'Birthdate',
             'Course' => 'Course',

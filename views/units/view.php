@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Units */
 
-$this->title = $model->UnitID;
+$this->title = $model->UnitName;
 $this->params['breadcrumbs'][] = ['label' => 'Units', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,13 +28,24 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'UnitID',
+            // 'UnitID',
             'UnitName',
             'UnitDescription',
             'MaxNumberOfTenants',
-            'HouseID',
+            // 'HouseID',
             'MonthlyRatePerPerson',
         ],
     ]) ?>
+
+    <?php if (isset($tenants)) { ?>
+        <h3>Tenants</h3>
+        <ol>
+
+        <?php foreach ($tenants as $t): ?>
+            <li><?= $t->TenantName ?></li>
+
+        <?php endforeach; ?>
+        </ol>
+    <?php } ?>
 
 </div>
