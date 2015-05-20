@@ -41,12 +41,10 @@ $bundle = AppAsset::register($this);
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="text-align: center;">
 				<h1>Overview of Functions</h1>
 				<p>
-					User management is not in the scope of this project but simple a User model and controller is used for the requisite Log In/Log out functions.<br> <br>
-					Upon logging in, the user is redirected to a home page of feeds. All the latest posts are displayed, as well as popular posts, and the current pinned post. <br>
-					'Like' buttons are used to determine a post's popularity. Quick commenting is allowed in the feeds page. <br>
-					Clicking on 'view' will direct the user to a post's indiviual post page, which will allow the user to leave comments and view all the comments on that particular post. <br>
-					Options such as delete and update are only available for the current user's own posts. <br> <br>
-					The user interface is simple and eye-catching. It takes design cues from the social networking trends of disaplying feeds and updates without being too cluttered. <br>
+					House Management<br>
+					Units Management <br>
+					Payment Management <br>
+					And many more! <br>
 				</p>
 		</div>
 

@@ -8,60 +8,10 @@ use yii\web\View;
 //use yii\base\View;
 ?>
 <div class="site-index">
-    <div id="myCarousel" class="carousel slide" data-ride="carousel">
-      <!-- Indicators -->
-      <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#myCarousel" data-slide-to="1"></li>
-        <li data-target="#myCarousel" data-slide-to="2"></li>
-        <li data-target="#myCarousel" data-slide-to="3"></li>
-      </ol>
+    	
+    <img src="images/banner.png" alt="UPLB Life">
 
-      <!-- Wrapper for slides -->
-      <div class="carousel-inner" role="listbox" style="height: 400px">
-        <div class="item active" style="height: 400px;" >
-          <img src="images/banners/westbrook.png" alt="Westbrook">
-          <div class="carousel-caption">
-            <h1>Westbrook</h1>
-            <h4>Ladies dormitory inside UPLB.</h4>
-          </div>
-        </div>
-
-        <div class="item" style="height: 400px">
-          <img src="images/banners/vistadelrey.png" alt="Vista del rey">
-          <div class="carousel-caption">
-            <h1>Vista del Rey Apartments</h1>
-            <h4>Something here apartments outside UPLB.</h4>
-          </div>
-        </div>
-
-        <div class="item" style="height: 400px">
-          <img src="images/banners/one_si.png" alt="One Silangan">
-          <div class="carousel-caption">
-            <h1>One Silangan Dormitory</h1>
-            <h4>Something here dormitory inside UPLB.</h4>
-          </div>
-        </div>
-
-        <div class="item" style="height: 400px">
-          <img src="images/banners/kdocs.jpg" alt="KDOCS Apartments">
-          <div class="carousel-caption">
-            <h1>KDOCS Apartments</h1>
-            <h4>Something here apartments outside UPLB.</h4>
-          </div>
-        </div>
-      </div>
-
-      <!-- Left and right controls -->
-      <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
-    </div>
+     
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="left-side">
 	
@@ -148,7 +98,7 @@ use yii\web\View;
 			<input type="checkbox"  value="1" name="HousesSearch[IsMaleOnly]">
 			Male Only
 			</label>
-
+			<br>
 			<br>
 
 			<?= Html::submitButton('Search by Categories&raquo;', ['class' => 'btn btn-primary']) ?>
@@ -185,26 +135,26 @@ use yii\web\View;
 			</div>
 
 			<div class="container-main col-md-12 " style="text-align: center;">
-				<h4><?= Html::a( 'New Houses', 'index.php?r=houses/view&id=1'); ?></h4>
+				<h4><?= Html::a( 'New Houses', 'index.php?r=houses'); ?></h4>
 				
 				<div class="container-main col-md-6 " style="text-align: center;">
-					<a href="index.php?r=houses/view&id=2"><img src="images/dorm2.jpg" height="200px" width="200px"></a>
-					<h5> KDOKS Apartments </h5>
+					<a href="index.php?r=houses/view&id=38"><img src="images/outside view_sandrose.png" height="200px" width="200px"></a>
+					<h5> Sandrose Place </h5>
 				</div>
 
 				<div class="container-main col-md-6 " style="text-align: center;">
-					<a href="index.php?r=houses/view&id=2"><img src="images/dorm3.jpg" height="200px" width="200"></a>
-					<h5> KDOKS Apartments </h5>
+					<a href="index.php?r=houses/view&id=37"><img src="images/blue house.png" height="200px" width="200"></a>
+					<h5> Blue House Apartments </h5>
 				</div>
 
 				<div class="container-main col-md-6 " style="text-align: center;">
-					<a href="index.php?r=houses/view&id=2"><img src="images/dorm2.jpg" height="200px" width="200px"></a>
-					<h5> KDOKS Apartments </h5>
+					<a href="index.php?r=houses/view&id=31"><img src="images/andrecitos_building.jpg" height="200px" width="200px"></a>
+					<h5> Andrecito's </h5>
 				</div>
 
 				<div class="container-main col-md-6 " style="text-align: center;">
-					<a href="index.php?r=houses/view&id=2"><img src="images/dorm3.jpg" height="200px" width="200"></a>
-					<h5> KDOKS Apartments </h5>
+					<a href="index.php?r=houses/view&id=32"><img src="images/name_vistadelrey.jpg" height="200px" width="200"></a>
+					<h5> Vista Del Rey Apartments </h5>
 				</div>
 
 			</div>
@@ -248,17 +198,18 @@ use yii\web\View;
 					<output id="amount_distance"><label>0 km</label></output>
 				</div>
 				<br>
-
 				<!-- <a class='btn btn-primary' href='index.php?r=houses/index'>Search by Filters&raquo;</a> -->
 				<?= Html::submitButton('Search by Filters&raquo;', ['class' => 'btn btn-primary']) ?>
 
 				<?php ActiveForm::end(); ?>
 				<br>
 				<br>
-				<img src="images/ads.jpg">
+				<a href="https://www.facebook.com/bigbellysglobal"><img src="images/ads/bigbellys.jpg" width="200px" height="200px"></a>
+				<h3> Big Bellys</h3>
 				<br>
 				<br>
-				<img src="images/ads.jpg">
+				<a href="https://www.facebook.com/cafeellalosbanos"><img src="images/ads/ella.jpg" width="200px" height="200px"></a>
+				<h3> Cafe Ella</h3>
 				<br>
 				<br>
 

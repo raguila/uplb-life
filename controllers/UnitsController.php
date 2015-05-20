@@ -337,7 +337,7 @@ class UnitsController extends Controller
     protected function getTenantsSDP($unitID) {
         //get tenants SQLDataProvider
         $tenants = new SqlDataProvider([
-            'sql' => 'SELECT * FROM Tenants WHERE UnitID=' . $unitID . ' ORDER BY TenantID ASC'
+            'sql' => 'SELECT * FROM tenants WHERE UnitID=' . $unitID . ' ORDER BY TenantID ASC'
         ]);
 
         return $tenants;
@@ -346,7 +346,7 @@ class UnitsController extends Controller
     protected function getRecentPaymentsSDP($unitID) {
         //get recentPayments SQLDataProvider
         $recentPayments = new SqlDataProvider([
-            'sql' => 'SELECT * FROM Payments WHERE UnitID=' . $unitID . ' ORDER BY DatePaid DESC'
+            'sql' => 'SELECT * FROM payments WHERE UnitID=' . $unitID . ' ORDER BY DatePaid DESC'
         ]);
 
         return $recentPayments;
@@ -359,7 +359,7 @@ class UnitsController extends Controller
         // ]);
 
         $recentComments = new SqlDataProvider([
-            'sql' => 'SELECT c.*, u.FirstName, u.LastName, u.UserName FROM Comments c, Users u WHERE c.UnitID=' . $unitID . ' AND u.UserID=c.UserID ORDER BY c.TImestamp DESC'
+            'sql' => 'SELECT c.*, u.FirstName, u.LastName, u.UserName FROM comments c, users u WHERE c.UnitID=' . $unitID . ' AND u.UserID=c.UserID ORDER BY c.TImestamp DESC'
         ]);
 
         return $recentComments;

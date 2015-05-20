@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Houses';
 $this->params['breadcrumbs'][] = $this->title;
+$isGuest = Yii::$app->user->isGuest;
 ?>
 <div class="houses-index">
 
@@ -16,7 +17,9 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
+        <?php if(!$isGuest){ ?>
         <?= Html::a('Create Houses', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php } ?>
     </p>
 
     <?= GridView::widget([

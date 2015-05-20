@@ -256,9 +256,9 @@ class PaymentsController extends Controller
     protected function getHouseTenants($houseID) {
          $tenants = (new Query())
             ->select(['t.TenantName', 't.TenantID'])
-            ->from('Tenants t')
-            ->leftJoin('Units u', 't.UnitID=u.UnitID')
-            ->leftJoin('Houses h', 'h.HouseID=u.HouseID')
+            ->from('tenants t')
+            ->leftJoin('units u', 't.UnitID=u.UnitID')
+            ->leftJoin('houses h', 'h.HouseID=u.HouseID')
             ->where('h.HouseID=:houseID', [':houseID' => $houseID])
             ->all();
 

@@ -28,6 +28,7 @@ AppAsset::register($this);
             $isGuest = Yii::$app->user->isGuest;
             $isAdmin = ((!$isGuest)&&(Yii::$app->user->identity->UserTypeID ==1));
             $isManager = ((!$isGuest)&&(Yii::$app->user->identity->UserTypeID ==3));
+            $isAdsManager = ((!$isGuest)&&(Yii::$app->user->identity->UserTypeID ==4));
             NavBar::begin([
                 'brandLabel' => 'UPLB Life',
                 'brandUrl' => Yii::$app->homeUrl,
@@ -40,6 +41,9 @@ AppAsset::register($this);
                 'items' => [
                     ($isAdmin || $isManager)?
                     ['label' => 'Payments', 'url' => ['/payments/index']]:
+                    "",
+                    ($isAdmin || $isAdsManager)?
+                    ['label' => 'Ads', 'url' => ['/ads/index']]:
                     "",
                     ['label' => 'Dorm Map', 'url' => ['/site/interactive']],
                     ['label' => 'About Us', 'url' => ['/site/about']],

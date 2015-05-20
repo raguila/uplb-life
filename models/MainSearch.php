@@ -18,7 +18,7 @@ class MainSearch extends Houses
     public function rules()
     {
         return [
-            [['HouseID', 'ContactNo', 'Featured', 'ManagerID'], 'integer'],
+            [['HouseID', 'Featured', 'HasWifi', 'HasAirConditioningUnit', 'HasCurfew', 'PetsAllowed', 'VisitorsAllowed', 'SmokingAllowed', 'DrinkingAllowed', 'IsInsideUPLB', 'IsLowerCampus', 'IsUpperCampus', 'HasLaundry', 'HasCanteen', 'HasParking', 'IsFurnished', 'IsSemiFurnished', 'HasOwnCR', 'HasOwnBathroom', 'IsMaleOnly', 'IsFemaleOnly', 'IsCoEd', 'ManagerID'], 'integer'],
             [['HouseName', 'HouseDescription', 'HouseType', 'Address', 'Caretaker', 'ContactNo'], 'safe'],
             [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
         ];
@@ -50,11 +50,6 @@ class MainSearch extends Houses
 
         $this->load($params);
 
-        if (!$this->validate()) {
-            // uncomment the following line if you do not want to any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
-        }
 
         // $query->andFilterWhere([
         //     'HouseID' => $this->HouseID,
