@@ -37,6 +37,7 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
+                    ['label' => 'Payments', 'url' => ['/payments/index']],
                     ['label' => 'Dorm Map', 'url' => ['/site/interactive']],
                     ['label' => 'About Us', 'url' => ['/site/about']],
 					['label' => 'Others', 'url' => ['/site/contact']],

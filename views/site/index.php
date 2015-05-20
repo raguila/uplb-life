@@ -67,23 +67,34 @@ use yii\web\View;
 	
 	  
 	  <div class="container col-md-3" style="text-align: center;">
+	  		
+
 			<h2>Categories</h2>
 			<br>
 			<h4>Location</h4>
-			<div class="checkbox" style="text-align:left;">
-			<label>
-			<input type="checkbox"  name="inside_uplb" id="outside_uplb" value="1" checked="">
-			Inside UPLB
-			<br>
-			&nbsp <input type="checkbox"  name="lower_campus" id="lower_campus" value="0">
-			Lower Campus
-			<br>
-			&nbsp <input type="checkbox"  name="upper_campus" id="upper_campus" value="0">
-			Upper Campus
-			<br>
-			<input type="checkbox" name="uplb" name="outside_uplb" id="outside_uplb" value="0">
-			Outside UPLB
-			</label>
+			
+			<div class="checkbox" style="text-align:center;">
+				<?php $form = ActiveForm::begin([
+			        'action' => ['site/searchresult'],
+			        'method' => 'get',
+			    ]); ?>
+				<label>
+				<input type="checkbox"  name="Houses[IsInsideUPLB]" id="inside_uplb" checked="">
+				Inside UPLB
+				<br>
+				<input type="checkbox"  name="Houses[IsLowerCampus]"  id="lower_campus">
+				Lower Campus
+				<br>
+				<input type="checkbox"  name="Houses[IsUpperCampus]" id="upper_campus" >
+				Upper Campus
+				<br>
+				</label>
+				<br>
+				<br>
+				<?= Html::submitButton('Search by Location&raquo;', ['class' => 'btn btn-primary']) ?>
+
+				<?php ActiveForm::end(); ?>
+
 			</div>
 
 			<h4>House Rules</h4>
@@ -163,9 +174,7 @@ use yii\web\View;
 			</label>
 			</div>
 
-			<a class='btn btn-primary' href='index.php?r=houses/index'>Search by Categories&raquo;</a>
-
-
+			
 			
 	  </div>
 

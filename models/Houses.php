@@ -13,13 +13,33 @@ use Yii;
  * @property string $HouseType
  * @property string $Address
  * @property string $Caretaker
- * @property integer $ContactNo
+ * @property string $ContactNo
  * @property string $Price
  * @property string $Size
  * @property string $Distance
- * @property string $Long
- * @property string $Lat
+ * @property double $Long
+ * @property double $Lat
  * @property integer $Featured
+ * @property integer $HasWifi
+ * @property integer $HasAirConditioningUnit
+ * @property integer $HasCurfew
+ * @property integer $PetsAllowed
+ * @property integer $VisitorsAllowed
+ * @property integer $SmokingAllowed
+ * @property integer $DrinkingAllowed
+ * @property integer $IsInsideUPLB
+ * @property integer $IsLowerCampus
+ * @property integer $IsUpperCampus
+ * @property integer $HasLaundry
+ * @property integer $HasCanteen
+ * @property integer $HasParking
+ * @property integer $IsFurnished
+ * @property integer $IsSemiFurnished
+ * @property integer $HasOwnCR
+ * @property integer $HasOwnBathroom
+ * @property integer $IsMaleOnly
+ * @property integer $IsFemaleOnly
+ * @property integer $IsCoEd
  * @property integer $ManagerID
  *
  * @property HouseCategory[] $houseCategories
@@ -45,11 +65,12 @@ class Houses extends \yii\db\ActiveRecord
     {
         return [
             [['HouseName', 'HouseDescription', 'HouseType', 'Address', 'Caretaker', 'Price', 'Size', 'Distance', 'Long', 'Lat', 'Featured', 'ManagerID'], 'required'],
-            [['Featured', 'ManagerID'], 'integer'],
             [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
-            [['HouseName', 'Caretaker'], 'string', 'max' => 30],
+            [['Featured', 'HasWifi', 'HasAirConditioningUnit', 'HasCurfew', 'PetsAllowed', 'VisitorsAllowed', 'SmokingAllowed', 'DrinkingAllowed', 'IsInsideUPLB', 'IsLowerCampus', 'IsUpperCampus', 'HasLaundry', 'HasCanteen', 'HasParking', 'IsFurnished', 'IsSemiFurnished', 'HasOwnCR', 'HasOwnBathroom', 'IsMaleOnly', 'IsFemaleOnly', 'IsCoEd', 'ManagerID'], 'integer'],
+            [['HouseName'], 'string', 'max' => 50],
             [['HouseDescription', 'Address'], 'string', 'max' => 200],
-            [['HouseType', 'ContactNo'], 'string', 'max' => 15]
+            [['HouseType', 'ContactNo'], 'string', 'max' => 15],
+            [['Caretaker'], 'string', 'max' => 30]
         ];
     }
 
@@ -72,6 +93,26 @@ class Houses extends \yii\db\ActiveRecord
             'Long' => 'Long',
             'Lat' => 'Lat',
             'Featured' => 'Featured',
+            'HasWifi' => 'Has Wifi',
+            'HasAirConditioningUnit' => 'Has Air Conditioning Unit',
+            'HasCurfew' => 'Has Curfew',
+            'PetsAllowed' => 'Pets Allowed',
+            'VisitorsAllowed' => 'Visitors Allowed',
+            'SmokingAllowed' => 'Smoking Allowed',
+            'DrinkingAllowed' => 'Drinking Allowed',
+            'IsInsideUPLB' => 'Is Inside Uplb',
+            'IsLowerCampus' => 'Is Lower Campus',
+            'IsUpperCampus' => 'Is Upper Campus',
+            'HasLaundry' => 'Has Laundry',
+            'HasCanteen' => 'Has Canteen',
+            'HasParking' => 'Has Parking',
+            'IsFurnished' => 'Is Furnished',
+            'IsSemiFurnished' => 'Is Semi Furnished',
+            'HasOwnCR' => 'Has Own Cr',
+            'HasOwnBathroom' => 'Has Own Bathroom',
+            'IsMaleOnly' => 'Is Male Only',
+            'IsFemaleOnly' => 'Is Female Only',
+            'IsCoEd' => 'Is Co Ed',
             'ManagerID' => 'Manager ID',
         ];
     }

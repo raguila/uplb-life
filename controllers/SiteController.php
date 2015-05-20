@@ -12,6 +12,7 @@ use app\models\Houses;
 use app\models\HousesSearch;
 use app\models\FilterSearch;
 use app\models\MainSearch;
+use app\models\HouseCategorySearch2;
 
 class SiteController extends Controller
 {
@@ -57,11 +58,13 @@ class SiteController extends Controller
         $model = new HousesSearch();
         $filter = new FilterSearch();
         $main = new MainSearch();
+        $hc = new HouseCategorySearch2();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         return $this->render('index', [
             'model' => $model,
             'filter' => $filter,
             'main' => $main,
+            'hc' => $hc,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
