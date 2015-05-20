@@ -1,9 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\DetailView;
-use yii\grid\GridView;
 use yii\helpers\Url;
+use yii\widgets\DetailView;
+use yii\widgets\ActiveForm;
+use yii\grid\GridView;
+
+
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Units */
@@ -107,6 +110,41 @@ $isGuest = Yii::$app->user->isGuest;
                 'Remarks',
             ], ]);
         } ?>
+
+    <?php
+        if (isset($recentComments)) {
+            echo "<h3>Recent Comments</h3>";
+            echo GridView::widget([
+                'dataProvider' => $recentComments,
+                'columns' => [
+                    //['class' => 'yii\grid\SerialColumn'],
+                    [ 'attribute' => 'User', 'value' => 'UserName'],
+                    'Comment',                    
+                    'TImestamp',
+                    //['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); }?>
+
+    <?php
+        if (isset($newComment) && !Yii::$app->user->isGuest) {
+            echo "<h4>Anything to say? Tell us!</h4>";
+            $form = ActiveForm::begin();
+
+            echo $form->field($newComment, 'UserID', ['template' => "{input}",])->hiddenInput();
+
+            echo $form->field($newComment, 'Comment', ['template' => "{input}",])->textArea(['maxlength' => 160]);
+
+            echo $form->field($newComment, 'UnitID', ['template' => "{input}",])->hiddenInput();
+
+            echo $form->field($newComment, 'TImestamp', ['template' => "{input}",])->hiddenInput();
+
+            echo "<div class=\"form-group\">";
+            echo Html::submitButton('Submit Comment', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']);
+            echo "</div>";
+
+            ActiveForm::end();
+        }
+    ?>
 
 
 

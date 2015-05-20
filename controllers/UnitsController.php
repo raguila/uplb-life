@@ -8,6 +8,7 @@ use app\models\UnitsSearch;
 use app\models\Houses;
 use app\models\Tenants;
 use app\models\Payments;
+use app\models\Comments;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -83,45 +84,88 @@ class UnitsController extends Controller
         $unitIsAvailable = false;
         $houseName = Houses::findOne($model->HouseID)->HouseName;
 
+        $newComment = new Comments();
+        $newComment->UnitID = $id;
+
+        $recentComments = $this->getRecentCommentsSDP($id);
+
         //Fetch tenants
         $tCount = Tenants::findAll(['UnitID' => $model->UnitID]);
-        if (count($tCount) == 0) { $unitIsAvailable = true; }
+        if (count($tCount) == 0) { $unitIsAvailable = true; }   
 
-        if (!$isGuest) {
-            $userTypeID = Yii::$app->user->identity->UserTypeID;
-            $userID = Yii::$app->user->identity->UserID;
-            $houseManagerID = Houses::findOne($model->HouseID)->ManagerID;
+        if ($newComment->load(Yii::$app->request->post())) {
+            $newComment->TImestamp = date("Y-m-d H:i:s");
+            if ($newComment->save()) {
+                $userID = Yii::$app->user->identity->UserID;
+                $userTypeID = Yii::$app->user->identity->UserTypeID;
+                $houseManagerID = Houses::findOne($model->HouseID)->ManagerID;
 
-            if ($userTypeID == 1 || ($userTypeID == 3 && $userID == $houseManagerID)) {
-                //Only admins and housemanagers can see the tenants/payments of a unit in the view page
-                $authorizedToCRUD = true;
+                if ($userTypeID == 1 || ($userTypeID == 3 && $userID == $houseManagerID)) {
+                    //Admin & HouseManagers
+                    $authorizedToCRUD = true;
+                    $tenants = $this->getTenantsSDP($id);
+                    $recentPayments = $this->getRecentPaymentsSDP($id);
 
-                //Get Tenants
-                $tenants = new SqlDataProvider([
-                    'sql' => 'SELECT * FROM Tenants WHERE UnitID=' . $model->UnitID . ' ORDER BY TenantID ASC'
-                ]);
+                    return $this->redirect([
+                        'view', 'id' => $model->UnitID,
+                        'tenants' => $tenants,
+                        'authorizedToCRUD' => $authorizedToCRUD,
+                        'houseName' => $houseName,
+                        'recentPayments' => $recentPayments,
+                        'newComment' => $newComment,
+                        'recentComments' => $recentComments
+                        ]);  
 
-                //Get Recent Payments
-                $recentPayments = new SqlDataProvider([
-                    'sql' => 'SELECT * FROM Payments WHERE UnitID=' . $model->UnitID . ' ORDER BY DatePaid DESC'
-                ]);
-
-                return $this->render('view', [
-                    'model' => $model,
-                    'tenants' => $tenants,
-                    'authorizedToCRUD' => $authorizedToCRUD,
-                    'houseName' => $houseName,
-                    'recentPayments' => $recentPayments
-                ]);
+                } else {
+                    //Normal users
+                    return $this->redirect([
+                        'view', 'id' => $model->UnitID,
+                        'authorizedToCRUD' => $authorizedToCRUD,
+                        'houseName' => $houseName,
+                        'newComment' => $newComment,
+                        'recentComments' => $recentComments
+                        ]); 
+                }
+                  
             }
+        } else {
+            if (!$isGuest) {
+                $userTypeID = Yii::$app->user->identity->UserTypeID;
+                $userID = Yii::$app->user->identity->UserID;
+                $newComment->UserID = $userID;
+                $houseManagerID = Houses::findOne($model->HouseID)->ManagerID;
+
+
+                if ($userTypeID == 1 || ($userTypeID == 3 && $userID == $houseManagerID)) {
+                    //Only admins and housemanagers can see the tenants/payments of a unit in the view page
+                    $authorizedToCRUD = true;
+                    $tenants = $this->getTenantsSDP($id);
+                    $recentPayments = $this->getRecentPaymentsSDP($id);
+                    
+                    return $this->render('view', [
+                        'model' => $model,
+                        'tenants' => $tenants,
+                        'authorizedToCRUD' => $authorizedToCRUD,
+                        'houseName' => $houseName,
+                        'recentPayments' => $recentPayments,
+                        'newComment' => $newComment,
+                        'recentComments' => $recentComments
+                    ]);
+                }
+            }
+
+            return $this->render('view', [
+                'model' => $model,
+                'authorizedToCRUD' => $authorizedToCRUD,
+                'houseName' => $houseName,
+                'unitIsAvailable' => $unitIsAvailable,
+                'newComment' => $newComment,
+                'recentComments' => $recentComments
+            ]);
         }
 
-        return $this->render('view', [
-            'model' => $model,
-            'authorizedToCRUD' => $authorizedToCRUD,
-            'houseName' => $houseName,
-            'unitIsAvailable' => $unitIsAvailable
-        ]);
+
+        
     }
 
     /**
@@ -290,13 +334,34 @@ class UnitsController extends Controller
         return $houseName;
     }
 
-    protected function getLastTenPayments($unitID) {
-        $recentPayments = Payments::find()
-            ->where(['UnitID' => $unitID])
-            ->orderBy(['DatePaid' => SORT_DESC])
-            ->limit(10)
-            ->all();
+    protected function getTenantsSDP($unitID) {
+        //get tenants SQLDataProvider
+        $tenants = new SqlDataProvider([
+            'sql' => 'SELECT * FROM Tenants WHERE UnitID=' . $unitID . ' ORDER BY TenantID ASC'
+        ]);
+
+        return $tenants;
+    }
+    
+    protected function getRecentPaymentsSDP($unitID) {
+        //get recentPayments SQLDataProvider
+        $recentPayments = new SqlDataProvider([
+            'sql' => 'SELECT * FROM Payments WHERE UnitID=' . $unitID . ' ORDER BY DatePaid DESC'
+        ]);
 
         return $recentPayments;
     }
+    
+    protected function getRecentCommentsSDP($unitID) {
+        //get recentComments SQLDataProvider
+        // $recentComments = new SqlDataProvider([
+        //     'sql' => 'SELECT * FROM Comments c WHERE c.UnitID=' . $unitID . ' ORDER BY c.TImestamp DESC'
+        // ]);
+
+        $recentComments = new SqlDataProvider([
+            'sql' => 'SELECT c.*, u.FirstName, u.LastName, u.UserName FROM Comments c, Users u WHERE c.UnitID=' . $unitID . ' AND u.UserID=c.UserID ORDER BY c.TImestamp DESC'
+        ]);
+
+        return $recentComments;
+    }                
 }
