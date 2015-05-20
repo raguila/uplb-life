@@ -20,8 +20,8 @@ $this->params['breadcrumbs'][] = $this->title;
     </div>
 
     <p>
-        Note that if you turn on the Yii debugger, you should be able
-        to view the mail message on the mail panel of the debugger.
+        <!-- Note that if you turn on the Yii debugger, you should be able
+        to view the mail message on the mail panel of the debugger. -->
         <?php if (Yii::$app->mailer->useFileTransport): ?>
         Because the application is in development mode, the email is not sent but saved as
         a file under <code><?= Yii::getAlias(Yii::$app->mailer->fileTransportPath) ?></code>.

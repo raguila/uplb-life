@@ -18,7 +18,7 @@ use yii\grid\GridView;
             // 'HouseID',
             'HouseName',
             'ContactNo',
-            //'HouseDescription',
+            'HouseDescription',
             //'Address',
             'Price',
             'Size',

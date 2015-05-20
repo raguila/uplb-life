@@ -19,7 +19,7 @@ $this->title = $model->HouseName;
 $this->params['breadcrumbs'][] = ['label' => 'Houses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $isGuest = Yii::$app->user->isGuest;
-$isUser = ((!$isGuest)&&(Yii::$app->user->identity->UserTypeID ==2));
+$isUser = ((!$isGuest)&&(!(Yii::$app->user->identity->UserTypeID ==2)));
 $bundle = AppAsset::register($this);
 
 $coord = new LatLng(['lat' => $model->Lat, 'lng' => $model->Long]);
@@ -76,7 +76,7 @@ $map->addOverlay($marker);
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php if(!$isGuest || !$isUser){ ?>
+        <?php if($isUser){ ?>
         <?= Html::a('Update', ['update', 'id' => $model->HouseID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->HouseID], [
             'class' => 'btn btn-danger',
