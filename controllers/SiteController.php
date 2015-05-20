@@ -12,7 +12,6 @@ use app\models\Houses;
 use app\models\HousesSearch;
 use app\models\FilterSearch;
 use app\models\MainSearch;
-use app\models\HouseCategorySearch2;
 
 class SiteController extends Controller
 {
@@ -55,23 +54,17 @@ class SiteController extends Controller
     public function actionIndex()
     {
 
-        $sql = "SELECT * FROM houses WHERE Featured = 1 AND HouseType= 'Dorm'";
-        $featured_dorm = Houses::findBySql($sql)->all();
+        // $sql = "SELECT * FROM houses WHERE Featured = 1 AND HouseType= 'Dorm'";
+        // $featured_dorm = Houses::findBySql($sql)->all();
 
-        $searchModel = new HousesSearch();
         $model = new HousesSearch();
         $filter = new FilterSearch();
         $main = new MainSearch();
-        $hc = new HouseCategorySearch2();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
         return $this->render('index', [
             'model' => $model,
             'filter' => $filter,
-            'main' => $main,
-            'hc' => $hc,
-            'featured_dorm' => $featured_dorm,
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+            'main' => $main
         ]);
     }
 
@@ -81,17 +74,41 @@ class SiteController extends Controller
         return $this->render('interactive');
     }
 
-    public function actionSearchresult()
+    public function actionMainsearch()
     {
-        $searchModel = new HousesSearch();
-        $model = new HousesSearch();
-        $houses = new Houses();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        
+        $main = new MainSearch();
+
+        $dataProvider = $main->search(Yii::$app->request->queryParams);
 
         return $this->render('searchresult', [
-            'model' => $model,
-            'searchModel' => $searchModel,
-            'houses' => $houses,
+            'model' => $main,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionCategorysearch()
+    {
+        
+        $category = new HousesSearch();
+
+        $dataProvider = $category->search(Yii::$app->request->queryParams);
+
+        return $this->render('searchresult', [
+            'model' => $category,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionFiltersearch()
+    {
+        
+        $filter = new FilterSearch();
+
+        $dataProvider = $filter->search(Yii::$app->request->queryParams);
+
+        return $this->render('searchresult', [
+            'model' => $filter,
             'dataProvider' => $dataProvider,
         ]);
     }

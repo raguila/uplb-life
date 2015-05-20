@@ -43,7 +43,7 @@ class HousesSearch extends Houses
     public function search($params)
     {
         $query = Houses::find();
-
+        Yii::info("Dito pumasok e. :(", __METHOD__);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);

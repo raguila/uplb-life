@@ -16,7 +16,7 @@ use yii\web\View;
     <div class="left-side">
 	
 	  
-	  <div class="container col-md-3" style="text-align: center;">
+	  <div class="container col-md-3" style="text-align: left;">
 	  		
 
 			<h2>Categories</h2>
@@ -24,8 +24,9 @@ use yii\web\View;
 			<h4>Location</h4>
 			
 			<?php $form = ActiveForm::begin([
-		        'action' => ['site/searchresult'],
+		        'action' => ['site/categorysearch'],
 		        'method' => 'get',
+		        'id' => 'categories_search',
 		    ]); ?>
 
 			<label>
@@ -112,10 +113,11 @@ use yii\web\View;
 
 	  <div class="container col-md-6">
 			<!-- <input type="text" class="form-control" placeholder="Search..."> -->
-			<br />
+			<br>
 			<?php $form = ActiveForm::begin([
-		        'action' => ['site/searchresult'],
+		        'action' => ['site/mainsearch'],
 		        'method' => 'get',
+		        'id' => 'main_search',
 		    ]); ?>
 		    
 		    <?= $form->field($main, 'HouseName',['template' => "{input}",])->textInput(['maxlength' => 255, 'placeholder' => 'Search..' ]) ?>
@@ -163,8 +165,9 @@ use yii\web\View;
 	  </div>
 	  <div class="container col-md-3" style="text-align: center;">
 	  <?php $form = ActiveForm::begin([
-	        'action' => ['site/searchresult'],
+	        'action' => ['site/filtersearch'],
 	        'method' => 'get',
+	        'id' => 'filter_search',
 	    ]); ?>
 				<h2>Filters</h2>
 				<br>

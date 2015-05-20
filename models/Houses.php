@@ -66,7 +66,7 @@ class Houses extends \yii\db\ActiveRecord
         return [
             [['HouseName', 'HouseDescription', 'HouseType', 'Address', 'Caretaker', 'Price', 'Size', 'Distance', 'Long', 'Lat', 'Featured', 'ManagerID'], 'required'],
             [['Price', 'Size', 'Distance', 'Long', 'Lat'], 'number'],
-            [['Featured', 'HasWifi', 'HasAirConditioningUnit', 'HasCurfew', 'PetsAllowed', 'VisitorsAllowed', 'SmokingAllowed', 'DrinkingAllowed', 'IsInsideUPLB', 'IsLowerCampus', 'IsUpperCampus', 'HasLaundry', 'HasCanteen', 'HasParking', 'IsFurnished', 'IsSemiFurnished', 'HasOwnCR', 'HasOwnBathroom', 'IsMaleOnly', 'IsFemaleOnly', 'IsCoEd', 'ManagerID'], 'integer'],
+            [['Featured', 'HasWifi', 'HasAirConditioningUnit', 'HasCurfew', 'PetsAllowed', 'VisitorsAllowed', 'SmokingAllowed', 'DrinkingAllowed', 'IsInsideUPLB', 'IsLowerCampus', 'IsUpperCampus', 'HasLaundry', 'HasCanteen', 'HasParking', 'IsFurnished', 'IsSemiFurnished', 'HasOwnCR', 'HasOwnBathroom', 'IsMaleOnly', 'IsFemaleOnly', 'IsCoEd', 'ManagerID'], 'safe'],
             [['HouseName'], 'string', 'max' => 50],
             [['HouseDescription', 'Address'], 'string', 'max' => 200],
             [['HouseType', 'ContactNo'], 'string', 'max' => 15],

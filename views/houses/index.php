@@ -28,7 +28,7 @@ $isGuest = Yii::$app->user->isGuest;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'HouseID',
+            // 'HouseID',
             'HouseName',
             'HouseDescription',
             'HouseType',

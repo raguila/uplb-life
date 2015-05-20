@@ -50,12 +50,9 @@ class FilterSearch extends Houses
 
         $this->load($params);
 
-      
-
-
-        //Filter price range by 500 given the input price
-        $query->andFilterWhere(['<=', 'Price', $this->Price + 500]);
-        $query->andWhere(['>=', 'Price', $this->Price - 500]);
+         //Filter price range by 500 given the input price
+        $query->andFilterWhere(['<=', 'Price', $this->Price + 200]);
+        $query->andWhere(['>=', 'Price', $this->Price - 200]);
 
         $query->andFilterWhere(['<=', 'Size', $this->Size + 2]);
         $query->andWhere(['>=', 'Size', $this->Size - 2]);

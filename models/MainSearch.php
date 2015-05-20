@@ -43,29 +43,23 @@ class MainSearch extends Houses
     public function search($params)
     {
         $query = Houses::find();
-
+        Yii::info("Dito pumasok e. :))", __METHOD__);
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
 
         $this->load($params);
 
-
-        // $query->andFilterWhere([
-        //     'HouseID' => $this->HouseID,
-        //     'ContactNo' => $this->ContactNo,
-        //     'Price' => $this->Price,
-        //     'Size' => $this->Size,
-        //     'Distance' => $this->Distance,
-        //     'Long' => $this->Long,
-        //     'Lat' => $this->Lat,
-        //     'Featured' => $this->Featured,
-        //     'ManagerID' => $this->ManagerID,
-        // ]);
+        if (!$this->validate()) {
+            // uncomment the following line if you do not want to any records when validation fails
+            // $query->where('0=1');
+            return $dataProvider;
+        }
 
         $query->andFilterWhere(['like', 'HouseName', $this->HouseName])
             //->andFilterWhere(['like', 'HouseDescription', $this->HouseDescription])
-            ->orWhere(['like', 'HouseType', $this->HouseName]);
+            ->orWhere(['like', 'HouseType', $this->HouseName])
+            ->orWhere(['like', 'HouseDescription', $this->HouseName]);
             //->andFilterWhere(['like', 'Address', $this->Address])
             //->andFilterWhere(['like', 'Caretaker', $this->Caretaker]);
 

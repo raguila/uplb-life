@@ -11,7 +11,7 @@ use yii\grid\GridView;
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        'filterModel' => $model,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 

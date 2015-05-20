@@ -40,6 +40,9 @@ AppAsset::register($this);
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
                     ($isAdmin || $isManager)?
+                    ['label' => 'View Houses', 'url' => ['/houses/index']]:
+                    "",
+                    ($isAdmin || $isManager)?
                     ['label' => 'Payments', 'url' => ['/payments/index']]:
                     "",
                     ($isAdmin || $isAdsManager)?
@@ -47,7 +50,7 @@ AppAsset::register($this);
                     "",
                     ['label' => 'Dorm Map', 'url' => ['/site/interactive']],
                     ['label' => 'About Us', 'url' => ['/site/about']],
-					['label' => 'Others', 'url' => ['/site/contact']],
+					['label' => 'Contact Us', 'url' => ['/site/contact']],
                     Yii::$app->user->isGuest ?
                         ['label' => 'Login', 'url' => ['/site/login']] :
                         ['label' => 'Logout (' . Yii::$app->user->identity->UserName . ')',
