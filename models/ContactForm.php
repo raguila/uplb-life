@@ -50,10 +50,17 @@ class ContactForm extends Model
     {
         if ($this->validate()) {
             Yii::$app->mailer->compose()
+                    ->setTo($this->email)
+                    ->setFrom([$this->email])
+                    ->setSubject("We have received your email!")
+                    ->setTextBody("Thank you for contacting us. We will reply to you within 24 hours.")
+                    ->send();
+                    
+            Yii::$app->mailer->compose()
                 ->setTo($email)
                 ->setFrom([$this->email => $this->name])
                 ->setSubject($this->subject)
-                ->setTextBody($this->body)
+                ->setTextBody($this->body." \nInquirer's Email: ".$this->email)
                 ->send();
 
             return true;

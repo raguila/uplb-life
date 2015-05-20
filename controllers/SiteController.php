@@ -142,12 +142,8 @@ class SiteController extends Controller
         $model = new ContactForm();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-            Yii::$app->mailer->compose('contact/html', ['contact-form' => $form])
-            ->setFrom([\Yii::$app->params['supportEmail'] => 'Test Mail'])
-            ->setTo($form->email)
-            ->setSubject($form->subject )
-            ->send();
-            //return $this->refresh();
+            
+            return $this->refresh();
         } else {
             return $this->render('contact', [
                 'model' => $model,
