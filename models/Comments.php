@@ -29,7 +29,7 @@ class Comments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['UserID', 'Comment', 'UnitID', 'TImestamp'], 'required'],
+            [['UserID', 'Comment', 'UnitID'], 'required'],
             [['UserID', 'UnitID'], 'integer'],
             [['TImestamp'], 'safe'],
             [['Comment'], 'string', 'max' => 160]

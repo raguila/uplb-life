@@ -65,6 +65,8 @@ class PaymentsController extends Controller
             $tenants = $this->getHouseTenants($houseID);
 
             $searchModel->HouseID = $houseID;  
+        } else {
+            return $this->goHome();
         }
 
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
