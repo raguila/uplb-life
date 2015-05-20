@@ -18,7 +18,7 @@ use dosamigos\google\maps\Map;
 $this->title = $model->HouseName;
 $this->params['breadcrumbs'][] = ['label' => 'Houses', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
-
+$isGuest = Yii::$app->user->isGuest;
 $bundle = AppAsset::register($this);
 
 $coord = new LatLng(['lat' => $model->Lat, 'lng' => $model->Long]);
@@ -75,6 +75,7 @@ $map->addOverlay($marker);
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
+        <?php if(!$isGuest){ ?>
         <?= Html::a('Update', ['update', 'id' => $model->HouseID], ['class' => 'btn btn-primary']) ?>
         <?= Html::a('Delete', ['delete', 'id' => $model->HouseID], [
             'class' => 'btn btn-danger',
@@ -83,6 +84,8 @@ $map->addOverlay($marker);
                 'method' => 'post',
             ],
         ]) ?>
+        <?php }?>
+
     </p>
     <div class="row">
     <div class="container col-md-6">  
@@ -111,6 +114,26 @@ $map->addOverlay($marker);
     </div>    
     
 </div>
+<br>
+<div class="houses-units" style="text-align: center;">
+    <h3>List of Units in this House</h3>
+    
+    <?php foreach ($model->units as $u): ?>
+    <div style="background-color:#FFFFF;">
+        <?php $uid = $u->UnitID ?>
+        <div class="container col-md-12" style="text-align: center;">
+        <a href="index.php?r=units/view&id=<?= $uid ?> ">
+            <h5><?= $uName = $u->UnitName ?></h5>
+        </a>
+        <h5> Max Number of Tenants: <?= $u->MaxNumberOfTenants ?></h5>
+        
+
+        </div>
+    </div>
+    <?php endforeach; ?>
+
+</div>
+
 
 
 </div>

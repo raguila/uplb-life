@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'UserTypeID')->textInput() ?>
+    <?= $form->field($model, 'UserTypeID',['template' => "{input}",])->hiddenInput(['value'=>2]) ?>
 
     <?= $form->field($model, 'UserName')->textInput(['maxlength' => 20]) ?>
 
@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'LastName')->textInput(['maxlength' => 20]) ?>
 
-    <?= $form->field($model, 'Picture')->textInput(['maxlength' => 20]) ?>
+    <?= $form->field($model, 'Picture')->hiddenInput(['maxlength' => 20]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

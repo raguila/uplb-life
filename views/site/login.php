@@ -34,6 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
     ])->checkbox() ?>
 
     <?= Html::submitButton('Login', ['class' => 'btn btn-primary', 'name' => 'login-button']) ?>
+    <h5>OR</h5>
+    <?= Html::a( 'Register', 'index.php?r=users/create'); ?>
       
     <?php ActiveForm::end(); ?>
+    
 </div>

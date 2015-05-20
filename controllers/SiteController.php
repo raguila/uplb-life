@@ -54,6 +54,10 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
+
+        $sql = "SELECT * FROM houses WHERE Featured = 1 AND HouseType= 'Dorm'";
+        $featured_dorm = Houses::findBySql($sql)->all();
+
         $searchModel = new HousesSearch();
         $model = new HousesSearch();
         $filter = new FilterSearch();
@@ -65,6 +69,7 @@ class SiteController extends Controller
             'filter' => $filter,
             'main' => $main,
             'hc' => $hc,
+            'featured_dorm' => $featured_dorm,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

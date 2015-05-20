@@ -73,106 +73,87 @@ use yii\web\View;
 			<br>
 			<h4>Location</h4>
 			
-			<div class="checkbox" style="text-align:center;">
-				<?php $form = ActiveForm::begin([
-			        'action' => ['site/searchresult'],
-			        'method' => 'get',
-			    ]); ?>
-				<label>
-				<input type="checkbox"  name="Houses[IsInsideUPLB]" id="inside_uplb" checked="">
-				Inside UPLB
-				<br>
-				<input type="checkbox"  name="Houses[IsLowerCampus]"  id="lower_campus">
-				Lower Campus
-				<br>
-				<input type="checkbox"  name="Houses[IsUpperCampus]" id="upper_campus" >
-				Upper Campus
-				<br>
-				</label>
-				<br>
-				<br>
-				<?= Html::submitButton('Search by Location&raquo;', ['class' => 'btn btn-primary']) ?>
+			<?php $form = ActiveForm::begin([
+		        'action' => ['site/searchresult'],
+		        'method' => 'get',
+		    ]); ?>
 
-				<?php ActiveForm::end(); ?>
-
-			</div>
+			<label>
+			<input type="checkbox"  name="HousesSearch[IsInsideUPLB]" id="inside_uplb" value="1" checked="">
+			Inside UPLB
+			<br>
+			<input type="checkbox"  name="HousesSearch[IsLowerCampus]"  id="lower_campus" value="1">
+			Lower Campus
+			<br>
+			<input type="checkbox"  name="HousesSearch[IsUpperCampus]" id="upper_campus" value="1">
+			Upper Campus
+			<br>
+			</label>
+			<br>
+				
 
 			<h4>House Rules</h4>
-			<div class="checkbox" style="text-align:left;">
 			<label>
-			<input type="checkbox"  value="1" checked="">
+			<input type="checkbox"  value="1" name="HousesSearch[PetsAllowed]" checked="">
 			Pets Allowed
 			<br>
-			<input type="checkbox"  value="0">
-			No Pets Allowed
+			<input type="checkbox"  value="1" name="HousesSearch[HasCurfew]">
+			Has Curfew
 			<br>
-			<input type="checkbox"  value="0">
-			No Curfew
-			<br>
-			<input type="checkbox"  value="0">
-			Partying Allowed
-			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[SmokingAllowed]">
 			Smoking Allowed
 			<br>
-			<input type="checkbox"  value="0">
-			No Smoking Allowed
-			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[VisitorsAllowed]">
 			Visitors Allowed
 			</label>
-			</div>
+			<br>
+			
 
 			<h4>Furnishing</h4>
-			<div class="checkbox" style="text-align:left;">
 			<label>
-			<input type="checkbox"  value="1" checked="">
+			<input type="checkbox"  value="1" checked="" name="HousesSearch[hasAirConditioningUnit]">
 			Airconditioned
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[IsFurnished]">
 			Furnished
 			<br>
-			<input type="checkbox"  value="0">
-			Unfurnished
+			<input type="checkbox"  value="1" name="HousesSearch[IsSemiFurnished]">
+			Sem-furnished
 			</label>
-			</div>
+			<br>
 
 			<h4>Ameneties</h4>
-			<div class="checkbox" style="text-align:left;">
 			<label>
-			<input type="checkbox"  value="1" checked="">
+			<input type="checkbox"  value="1" checked="" name="HousesSearch[HasLaundry]">
 			Has Laundry
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[HasCanteen]">
 			Has Canteen
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[HasParking]">
 			Has Parking
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[HasWifi]">
 			Has WiFi
-			<br>
-			<input type="checkbox"  value="0">
-			Has CCTV
-			<br>
-			<input type="checkbox"  value="0">
-			Has Security Guard
 			</label>
-			</div>
-
+			<br>
 			<h4>Tenants</h4>
-			<div class="checkbox" style="text-align:left;">
 			<label>
-			<input type="checkbox"  value="1" checked="">
+			<input type="checkbox"  value="1" checked="" name="HousesSearch[IsCoEd]">
 			CoEd
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[IsFemaleOnly]">
 			Female Only
 			<br>
-			<input type="checkbox"  value="0">
+			<input type="checkbox"  value="1" name="HousesSearch[IsMaleOnly]">
 			Male Only
 			</label>
-			</div>
+
+			<br>
+
+			<?= Html::submitButton('Search by Categories&raquo;', ['class' => 'btn btn-primary']) ?>
+
+			<?php ActiveForm::end(); ?>
 
 			
 			
@@ -192,15 +173,15 @@ use yii\web\View;
 			<?php ActiveForm::end(); ?>
 
 			<div class="container-main col-md-12 " style="text-align: center;">
-				<h4><?= Html::a( 'Featured Dormitory', 'index.php?r=houses/view&id=1'); ?></h4>
-				<a href="index.php?r=houses/view&id=1"><img src="images/dorm.jpg" height="200px" width="450px"></a>
-				 
+				<h4><?= Html::a( 'Featured Dormitory', 'index.php?r=houses/view&id=2'); ?></h4>
+				<a href="index.php?r=houses/view&id=2"><img src="images/mens-dorm". height="200px" width="450px"></a>
+				<h5> Men's Dormitory </h5>
 			</div>
 
 			<div class="container-main col-md-12 " style="text-align: center;">
-				<h4><?= Html::a( 'Featured Apartment', 'index.php?r=houses/view&id=1'); ?></h4>
-				<a href="index.php?r=houses/view&id=1"><img src="images/dorm4.jpg" height="200px" width="450px"></a>
-				 
+				<h4><?= Html::a( 'Featured Apartment', 'index.php?r=houses/view&id=20'); ?></h4>
+				<a href="index.php?r=houses/view&id=20"><img src="images/kdocs front view.jpg" height="200px" width="450px"></a>
+				 <h5> KDOKS Apartments </h5>
 			</div>
 
 			<div class="container-main col-md-12 " style="text-align: center;">
@@ -208,10 +189,22 @@ use yii\web\View;
 				
 				<div class="container-main col-md-6 " style="text-align: center;">
 					<a href="index.php?r=houses/view&id=2"><img src="images/dorm2.jpg" height="200px" width="200px"></a>
+					<h5> KDOKS Apartments </h5>
 				</div>
 
 				<div class="container-main col-md-6 " style="text-align: center;">
 					<a href="index.php?r=houses/view&id=2"><img src="images/dorm3.jpg" height="200px" width="200"></a>
+					<h5> KDOKS Apartments </h5>
+				</div>
+
+				<div class="container-main col-md-6 " style="text-align: center;">
+					<a href="index.php?r=houses/view&id=2"><img src="images/dorm2.jpg" height="200px" width="200px"></a>
+					<h5> KDOKS Apartments </h5>
+				</div>
+
+				<div class="container-main col-md-6 " style="text-align: center;">
+					<a href="index.php?r=houses/view&id=2"><img src="images/dorm3.jpg" height="200px" width="200"></a>
+					<h5> KDOKS Apartments </h5>
 				</div>
 
 			</div>
