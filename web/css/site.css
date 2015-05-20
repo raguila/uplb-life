@@ -228,3 +228,9 @@ textarea {
   float:left;
   margin-right: 15px;
 }
+
+/*Custom CSS for Units*/
+
+.reservation-group {
+  text-align: center;
+}

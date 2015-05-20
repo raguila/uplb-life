@@ -15,25 +15,38 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-    <p>
-        <?= Html::a('Create Units', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+    <?php if ($authorizedToCRUD) { ?>
+        <p>
+            <?= Html::a('Create Units', ['create'], ['class' => 'btn btn-success']) ?>
+        </p>
+        <?php } ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+    <?php if ($authorizedToCRUD) { 
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'UnitName',
+                'UnitDescription',
+                'MaxNumberOfTenants',
+                'MonthlyRatePerPerson',
+                ['class' => 'yii\grid\ActionColumn'],
+            ],
+        ]); 
+    } else { //Guests can't edit/
+        echo GridView::widget([
+            'dataProvider' => $dataProvider,
+            'filterModel' => $searchModel,
+            'columns' => [
+                ['class' => 'yii\grid\SerialColumn'],
+                'UnitName',
+                'UnitDescription',
+                'MaxNumberOfTenants',
+                'MonthlyRatePerPerson',
+                ['class' => 'yii\grid\ActionColumn', 'template' => '{view}'],
+            ],
+        ]); 
 
-            //'UnitID',
-            'UnitName',
-            'UnitDescription',
-            'MaxNumberOfTenants',
-            //'HouseID',
-            'MonthlyRatePerPerson',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-
+    }?>
 </div>

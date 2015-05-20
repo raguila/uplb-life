@@ -5,12 +5,14 @@ namespace app\controllers;
 use Yii;
 use app\models\Units;
 use app\models\UnitsSearch;
+use app\models\Houses;
+use app\models\Tenants;
+use app\models\Payments;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use app\models\Houses;
-use app\models\Tenants;
-use \yii\db\Query;
+use yii\db\Query;
+use yii\data\SqlDataProvider;
 
 /**
  * UnitsController implements the CRUD actions for Units model.
@@ -39,13 +41,14 @@ class UnitsController extends Controller
         $houseName = '';
 
         $isGuest = Yii::$app->user->isGuest;
+        $authorizedToCRUD = false;
 
         if (!$isGuest) {
             $userTypeID = Yii::$app->user->identity->UserTypeID;
 
             if ($userTypeID == 1) {
                 $houseName = '';
-
+                $authorizedToCRUD = true;
             } else if ($userTypeID == 3) {
                 $houseID = $this->getHouseID(Yii::$app->user->identity->UserID);
                 $houseName = $this->getHouseName(Yii::$app->user->identity->UserID);
@@ -53,6 +56,8 @@ class UnitsController extends Controller
                 $searchModel->HouseID = $houseID;
 
                 $units = Units::findAll(['HouseID' => $houseID]);
+
+                $authorizedToCRUD = true;
             }
         }
 
@@ -60,7 +65,8 @@ class UnitsController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'houseName' => $houseName
+            'houseName' => $houseName,
+            'authorizedToCRUD' => $authorizedToCRUD
         ]);
     }
 
@@ -73,6 +79,13 @@ class UnitsController extends Controller
     {
         $isGuest = Yii::$app->user->isGuest;
         $model = $this->findModel($id);
+        $authorizedToCRUD = false;
+        $unitIsAvailable = false;
+        $houseName = Houses::findOne($model->HouseID)->HouseName;
+
+        //Fetch tenants
+        $tCount = Tenants::findAll(['UnitID' => $model->UnitID]);
+        if (count($tCount) == 0) { $unitIsAvailable = true; }
 
         if (!$isGuest) {
             $userTypeID = Yii::$app->user->identity->UserTypeID;
@@ -80,19 +93,34 @@ class UnitsController extends Controller
             $houseManagerID = Houses::findOne($model->HouseID)->ManagerID;
 
             if ($userTypeID == 1 || ($userTypeID == 3 && $userID == $houseManagerID)) {
-                //Only admins and housemanagers can see the tenants of a unit in the view page
+                //Only admins and housemanagers can see the tenants/payments of a unit in the view page
+                $authorizedToCRUD = true;
 
-                $tenants = $this->getUnitTenants($model->UnitID);    
+                //Get Tenants
+                $tenants = new SqlDataProvider([
+                    'sql' => 'SELECT * FROM Tenants WHERE UnitID=' . $model->UnitID . ' ORDER BY TenantID ASC'
+                ]);
+
+                //Get Recent Payments
+                $recentPayments = new SqlDataProvider([
+                    'sql' => 'SELECT * FROM Payments WHERE UnitID=' . $model->UnitID . ' ORDER BY DatePaid DESC'
+                ]);
+
                 return $this->render('view', [
                     'model' => $model,
-                    'tenants' => $tenants
+                    'tenants' => $tenants,
+                    'authorizedToCRUD' => $authorizedToCRUD,
+                    'houseName' => $houseName,
+                    'recentPayments' => $recentPayments
                 ]);
             }
         }
 
-
         return $this->render('view', [
-            'model' => $model
+            'model' => $model,
+            'authorizedToCRUD' => $authorizedToCRUD,
+            'houseName' => $houseName,
+            'unitIsAvailable' => $unitIsAvailable
         ]);
     }
 
@@ -142,9 +170,11 @@ class UnitsController extends Controller
                         'titleSuffix' => $titleSuffix,
                         'isAdmin' => $isAdmin
                     ]);
+                } else {
+                    return $this->goHome();
                 }
             } else {
-                //Guest. Redirect to home page
+                return $this->goHome();
             }
         }
     }
@@ -260,9 +290,13 @@ class UnitsController extends Controller
         return $houseName;
     }
 
-    protected function getUnitTenants($unitID) {
-        $tenants = Tenants::findAll(['UnitID' => $unitID]);
+    protected function getLastTenPayments($unitID) {
+        $recentPayments = Payments::find()
+            ->where(['UnitID' => $unitID])
+            ->orderBy(['DatePaid' => SORT_DESC])
+            ->limit(10)
+            ->all();
 
-        return $tenants;
+        return $recentPayments;
     }
 }

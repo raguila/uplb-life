@@ -23,14 +23,14 @@ use yii\helpers\ArrayHelper;
     } else {
         echo $form->field($model, 'HouseID', ['template' => "{input}",])->hiddenInput();
     } ?>
-
+    
     <?= $form->field($model, 'UnitName')->textInput(['maxlength' => 30]) ?>
-
-    <?= $form->field($model, 'UnitDescription')->textInput(['maxlength' => 200]) ?>
 
     <?= $form->field($model, 'MaxNumberOfTenants')->textInput() ?>
 
     <?= $form->field($model, 'MonthlyRatePerPerson')->textInput() ?>
+
+    <?= $form->field($model, 'UnitDescription')->textArea(['maxlength' => 200]) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
