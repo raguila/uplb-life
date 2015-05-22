@@ -93,7 +93,7 @@ $map->addOverlay($marker);
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'HouseID',
+            // 'HouseID',
             'HouseName',
             'HouseDescription',
             'Address',
@@ -103,9 +103,9 @@ $map->addOverlay($marker);
             'HouseType',
             'Caretaker',
             'ContactNo',
-            'Long',
-            'Lat',
-            'ManagerID'
+            // 'Long',
+            // 'Lat',
+            // 'manager'
         ],
     ]) ?>
     </div>

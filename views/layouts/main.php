@@ -9,11 +9,15 @@ use app\assets\AppAsset;
 /* @var $content string */
 
 AppAsset::register($this);
+$bundle = AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <link rel="shortcut icon" href="<?=$bundle->baseUrl.'/images/'?>favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=$bundle->baseUrl.'/images/'?>favicon.ico" type="image/x-icon">
+
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
